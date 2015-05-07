@@ -12,10 +12,12 @@
 hs_err_pid*
 
 #Eclipse IDE
-.project
 .settings/
+org.eclipse.jdt.core.prefs
 bin/
+.project
 .classpath
+
 
 #IntelliJ
 *.iml
