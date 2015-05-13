@@ -5,14 +5,14 @@ import sapper.map.objects.types.Type;
 public class BombType {
 	private int radius;
 	private Type type;
-	private int size;
+	private BombSize size;
 	private int timeToDetonation;
 	private boolean isActive;
 	private boolean isDetonated;
 	
 	public BombType() {}
 	
-	public BombType(int radius, Type type, int size, int timeToDetonation, boolean isActive) {
+	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive) {
 		this.radius = radius;
 		this.type = type;
 		this.size = size;
@@ -29,7 +29,7 @@ public class BombType {
 		 return type;
 	 }
 	 
-	 public int getSize() {
+	 public BombSize getSize() {
 		 return size; 
 	 }
 	 
@@ -50,4 +50,9 @@ public class BombType {
 	 public void setIsdetonated() {
 		 this.isDetonated = true;
 	 }
+
+	public int getPotentialVictims() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
