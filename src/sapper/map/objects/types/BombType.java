@@ -53,6 +53,6 @@ public class BombType {
 
 	public int getPotentialVictims() {
 		// TODO Auto-generated method stub
-		return 0;
+		return size.getValue() * radius;
 	}
 }

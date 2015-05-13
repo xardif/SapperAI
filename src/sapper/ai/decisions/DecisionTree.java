@@ -1,7 +1,11 @@
 package sapper.ai.decisions;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Queue;
+import java.util.Set;
+import java.util.TreeSet;
 
 import sapper.ai.decisions.bomb.BombPriority;
 import sapper.ai.decisions.bomb.nodes.DecisionNode;
@@ -27,7 +31,23 @@ public class DecisionTree {
 	}
 	
 	public Queue<BombType> sortBombsByPriority(Collection<BombType> collection) {
-		return null;
+		
+		Set<BombType> set = new TreeSet<>(new Comparator<BombType>() {
+			@Override
+			public int compare(BombType o1, BombType o2) {
+				return getBombPriority(o1).compareTo(getBombPriority(o2));
+			}
+		});
+		
+		for(BombType bomb: collection)
+			set.add(bomb);
+		
+		Queue<BombType> result = new ArrayDeque<>();
+		
+		for(BombType bomb: set)
+			result.add(bomb);
+		
+		return result;
 		
 	}
 	
