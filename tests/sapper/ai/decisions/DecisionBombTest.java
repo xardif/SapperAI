@@ -1,5 +1,9 @@
 package sapper.ai.decisions;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,6 +30,24 @@ public class DecisionBombTest {
 		
 		BombType verybigNuke = new BombType(10, Type.Nuke, BombSize.VERY_BIG, 10, true);
 		Assert.assertEquals(BombPriority.CRITICAL, tree.getBombPriority(verybigNuke));
+		
+	}
+	
+	@Test
+	public void testSortBombsByPriority() {
+		
+		DecisionTree tree = DecisionTree.buildBombDecisionTree();
+		
+		List<BombType> bombs = new ArrayList<>();
+		bombs.add(new BombType(10, Type.Nuke, BombSize.BIG, 10, true));
+		bombs.add(new BombType(150, Type.C4, BombSize.MEDIUM, 10, true));
+		bombs.add(new BombType(10, Type.FakeBomb, BombSize.BIG, 10, true));
+		bombs.add(new BombType(10, Type.Nuke, BombSize.VERY_BIG, 10, true));
+		
+		System.out.println("Bombs: " + bombs.toString());
+		
+		Queue<BombType> result = tree.sortBombsByPriority(bombs);
+		System.out.println("Sorted bombs: " + result.toString());
 		
 	}
 

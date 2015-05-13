@@ -47,7 +47,15 @@ public class BombType {
 	 public boolean getIsDetonated() {
 		 return isDetonated;
 	 }
-	 public void setIsdetonated() {
+	 @Override
+	public String toString() {
+		return "BombType [radius=" + radius + ", type=" + type + ", size="
+				+ size + ", timeToDetonation=" + timeToDetonation
+				+ ", isActive=" + isActive + ", isDetonated=" + isDetonated
+				+ "]";
+	}
+
+	public void setIsdetonated() {
 		 this.isDetonated = true;
 	 }
 

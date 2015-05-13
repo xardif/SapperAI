@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 
 import sapper.ai.decisions.bomb.BombPriority;
@@ -43,9 +44,13 @@ public class DecisionTree {
 			set.add(bomb);
 		
 		Queue<BombType> result = new ArrayDeque<>();
+		Stack<BombType> reverserStack = new Stack<>();
 		
 		for(BombType bomb: set)
-			result.add(bomb);
+			reverserStack.push(bomb);
+		
+		while(!reverserStack.isEmpty())
+			result.add(reverserStack.pop());
 		
 		return result;
 		
