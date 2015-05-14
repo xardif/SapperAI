@@ -12,8 +12,8 @@ public class Bomb extends FieldObject {
 	}
 	
 	public Bomb(Type type, int size, int timeToDetonation, boolean isActive) {
-		int r = size*2;	//tu powinno byæ dobranie pola ra¿enia na podstawie materia³u i wielkoœci
-		this.bombType = new BombType(r, type, BombSize.valueOf(String.valueOf(size)), timeToDetonation, isActive);
+		int r = size*2;	//tu powinno byï¿½ dobranie pola raï¿½enia na podstawie materiaï¿½u i wielkoï¿½ci
+		this.bombType = new BombType(r, type, BombSize.valueOf(size), timeToDetonation, isActive);
 	}
 	
 	public BombType getBombType() {

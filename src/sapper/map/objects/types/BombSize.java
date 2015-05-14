@@ -8,7 +8,7 @@ public enum BombSize {
 	BIG(4),
 	VERY_BIG(5);
 	
-	private int value;    
+	private final int value;
 
 	private BombSize(int value) {
 		this.value = value;
@@ -17,5 +17,13 @@ public enum BombSize {
 	public int getValue() {
 		return value;
 	}	
-	
+
+    public static BombSize valueOf(int i){
+        for(BombSize b : BombSize.values()){
+            if(b.getValue() == i)
+                return b;
+        }
+        return null;
+    }
+
 }
