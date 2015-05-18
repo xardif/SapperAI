@@ -89,101 +89,62 @@ public class Field implements Comparable<Object> {
 			return false;
 	}
 
+	public int countTurns(int to, int from) {
+		if(from < 0)
+			return 0;
+		if((Math.abs(to-from) > 4))
+			return 8-Math.abs(to-from);
+		else
+			return to-from;
+	}
+	
 	public int[] getCostAndPosition(Field from, Field to)
 	{
-		int xDiff = from.getXPosition() - to.getXPosition();	//jeï¿½eli minus to w dï¿½
-		int yDiff = from.getYPosition() - to.getYPosition();	//jeï¿½eli minus to w prawo
+		int xDiff = from.getXPosition() - to.getXPosition();	//je¿eli minus to w dó³
+		int yDiff = from.getYPosition() - to.getYPosition();	//je¿eli minus to w prawo
 		int[] result = new int[2];	//result[0] - koszt obrotu, result[1] - pozycje nastepnika
-		
-		//powiedzmy, ï¿½e koszt obrotu =1
+
+		//powiedzmy, ¿e koszt obrotu =1
 		//idzie w gore
 		if(xDiff == 1 && yDiff == 0) {
-			if(sapperPosition == 0)	{ //jest zwrocony w gore
-				result[0] = 0;
-				result[1] = 0;
-			}
-			else {	//obrot
-				result[0] = 2;
-				result[1] = 0;
-			}
+			result[0] = Math.abs(countTurns(0, from.sapperPosition));
+			result[1] = 0;
 		}
 		//idzie w gora prawo
 		if(xDiff == 1 && yDiff == -1) {
-			if(sapperPosition == 1) { //jest zwrocony w gora prawo
-				result[0] = 0;
-				result[1] = 1;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 1;
-			}
+			result[0] = Math.abs(countTurns(1, from.sapperPosition));
+			result[1] = 1;
 		}
 		//idzie w prawo
 		if(xDiff == 0 && yDiff == -1) {
-			if(sapperPosition == 2)	{ //jest zwrocony w prawo
-				result[0] = 0;
-				result[1] = 2;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 2;
-			}
+			result[0] = Math.abs(countTurns(2, from.sapperPosition));
+			result[1] = 2;
 		}
 		//idzie w dol prawo
 		if(xDiff == -1 && yDiff == -1) {
-			if(sapperPosition == 3) { //jest zwrocony w dol prawo
-				result[0] = 0;
-				result[1] = 3;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 3;
-			}
+			result[0] = Math.abs(countTurns(3, from.sapperPosition));
+			result[1] = 3;
 		}
 		//idzie w dol
 		if(xDiff == -1 && yDiff == 0) {
-			if(sapperPosition == 4)	{ //jest zwrocony w dol
-				result[0] = 0;
-				result[1] = 4;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 4;
-			}
+			result[0] = Math.abs(countTurns(4, from.sapperPosition));
+			result[1] = 4;
 		}
 		//idzie w dol lewo
 		if(xDiff == -1 && yDiff == 1) {
-			if(sapperPosition == 5)	{ //jest zwrocony w dol lewo
-				result[0] = 0;
-				result[1] = 5;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 5;
-			}
+			result[0] = Math.abs(countTurns(5, from.sapperPosition));
+			result[1] = 5;
 		}		
 		//idzie w lewo
 		if(xDiff == 0 && yDiff == 1) {
-			if(sapperPosition == 6)	{ //jest zwrocony w lewo
-				result[0] = 0;
-				result[1] = 6;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 6;
-			}
+			result[0] = Math.abs(countTurns(6, from.sapperPosition));
+			result[1] = 6;
 		}
 
 		//idzie w gora lewo
 		if(xDiff == 1 && yDiff == 1) {
-			if(sapperPosition == 7)	{ //jest zwrocony w gora lewo
-				result[0] = 0;
-				result[1] = 7;
-			}
-			else {	//obrot
-				result[0] = 1;
-				result[1] = 7;
-			}
+			result[0] = Math.abs(countTurns(7, from.sapperPosition));
+			result[1] = 7;
 		}	
 		return result;
 	}
@@ -195,7 +156,7 @@ public class Field implements Comparable<Object> {
 		for (int xd=-1; xd<=1; xd++) {
 			for (int yd=-1; yd<=1; yd++) {
 				if(Map.getField(x+xd,y+yd) != null) {
-					int[] turnCost = getCostAndPosition(Map.getField(x,y), Map.getField(x+xd,y+yd));
+					int[] turnCost = getCostAndPosition(this, Map.getField(x+xd,y+yd));
 					Field f;
 					if (Map.getField(x+xd,y+yd).getObjects().isEmpty())
 					{

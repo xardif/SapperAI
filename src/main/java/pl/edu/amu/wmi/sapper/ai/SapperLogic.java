@@ -194,8 +194,15 @@ public class SapperLogic {
             SolutionPathList.add(0, p);
             p = p.getParentField();
         }
-
+        
+        int pathCost = 0;
+        for(Field f : SolutionPathList) {
+        	pathCost += f.getGCost();
+        }
+        
+        
         //wypisanie rozwiazania
         Map.PrintSolution(SolutionPathList);
+        System.out.println("Koszt przejœcia (w sekundach): " + pathCost);
 	}
 }
