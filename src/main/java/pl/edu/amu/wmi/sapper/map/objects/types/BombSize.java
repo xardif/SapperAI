@@ -25,5 +25,17 @@ public enum BombSize {
         }
         return null;
     }
+    
+    @Override
+    public String toString() {
+    	switch(this) {
+		case BIG: return "BIG";
+		case SMALL: return "SMALL";
+		case TINY: return "TINY";
+		case MEDIUM : return "MEDIUM";
+		case VERY_BIG: return "VERY_BIG";
+		default: return "UNKNOWN";    	
+    	}
+    }
 
 }

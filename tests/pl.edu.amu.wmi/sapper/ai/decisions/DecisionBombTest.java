@@ -7,6 +7,7 @@ import java.util.Queue;
 import org.junit.Assert;
 import org.junit.Test;
 
+import pl.edu.amu.wmi.sapper.ai.decisions.BombPriorityTree;
 import pl.edu.amu.wmi.sapper.ai.decisions.bomb.BombPriority;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombSize;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
@@ -17,7 +18,7 @@ public class DecisionBombTest {
 	@Test
 	public void testGetBombPriority() {
 		
-		DecisionTree tree = DecisionTree.buildBombDecisionTree();
+		BombPriorityTree tree = BombPriorityTree.buildBombDecisionTree();
 		
 		BombType bigNuke = new BombType(10, Type.Nuke, BombSize.BIG, 10, true);
 		Assert.assertEquals(BombPriority.VERY_HIGH, tree.getBombPriority(bigNuke));
@@ -36,7 +37,7 @@ public class DecisionBombTest {
 	@Test
 	public void testSortBombsByPriority() {
 		
-		DecisionTree tree = DecisionTree.buildBombDecisionTree();
+		BombPriorityTree tree = BombPriorityTree.buildBombDecisionTree();
 		
 		List<BombType> bombs = new ArrayList<>();
 		bombs.add(new BombType(10, Type.Nuke, BombSize.BIG, 10, true));

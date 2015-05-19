@@ -19,5 +19,19 @@ public enum BombPriority implements Comparable<BombPriority> {
 	public int getValue() {
 		return value;
 	}
+	
+	@Override
+	public String toString() {
+		switch(this) {
+		case CRITICAL: return "CRITICAL";
+		case HIGH: return "HIGH";
+		case LOW: return "LOW";
+		case MEDIUM: return "MEDIUM";
+		case VERY_HIGH: return "VERY_HIGH";
+		case VERY_LOW: return "VERY_LOW";
+		case ZERO: return "ZERO";
+		default: return "UNKNOWN";		
+		}
+	}
 
 }
