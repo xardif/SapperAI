@@ -1,4 +1,4 @@
-package pl.edu.amu.wmi.sapper.ai.decisions;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class DecisionBombTest {
 	@Test
 	public void testGetBombPriority() {
 		
-		BombPriorityTree tree = BombPriorityTree.buildBombDecisionTree();
+		BombPriorityTree tree = BombPriorityTree.buildBombPriorityTree();
 		
 		BombType bigNuke = new BombType(10, Type.Nuke, BombSize.BIG, 10, true);
 		Assert.assertEquals(BombPriority.VERY_HIGH, tree.getBombPriority(bigNuke));
@@ -32,12 +32,15 @@ public class DecisionBombTest {
 		BombType verybigNuke = new BombType(10, Type.Nuke, BombSize.VERY_BIG, 10, true);
 		Assert.assertEquals(BombPriority.CRITICAL, tree.getBombPriority(verybigNuke));
 		
+		BombType verybigNukeInactive = new BombType(10, Type.Nuke, BombSize.VERY_BIG, 10, false);
+		Assert.assertEquals(BombPriority.ZERO, tree.getBombPriority(verybigNukeInactive));
+		
 	}
 	
 	@Test
 	public void testSortBombsByPriority() {
 		
-		BombPriorityTree tree = BombPriorityTree.buildBombDecisionTree();
+		BombPriorityTree tree = BombPriorityTree.buildBombPriorityTree();
 		
 		List<BombType> bombs = new ArrayList<>();
 		bombs.add(new BombType(10, Type.Nuke, BombSize.BIG, 10, true));
