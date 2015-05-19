@@ -1,0 +1,9 @@
+@RELATION BombType
+
+@ATTRIBUTE Type {C4, Nuke, DirtyBomb, FakeBomb, HomeMadeBomb, Dynamite, ChemicalBomb}
+@ATTRIBUTE Size {TINY, SMALL, MEDIUM, BIG, VERY_BIG}
+@ATTRIBUTE Active {true, false}
+@ATTRIBUTE Victims NUMERIC
+@ATTRIBUTE VERY_HIGH {true, false}
+
+@DATA
