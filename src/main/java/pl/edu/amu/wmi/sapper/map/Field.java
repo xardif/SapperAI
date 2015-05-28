@@ -100,11 +100,11 @@ public class Field implements Comparable<Object> {
 	
 	public int[] getCostAndPosition(Field from, Field to)
 	{
-		int xDiff = from.getXPosition() - to.getXPosition();	//jeøeli minus to w dÛ≥
-		int yDiff = from.getYPosition() - to.getYPosition();	//jeøeli minus to w prawo
+		int xDiff = from.getXPosition() - to.getXPosition();	//je≈ºeli minus to w d√≥≈Ç
+		int yDiff = from.getYPosition() - to.getYPosition();	//je≈ºeli minus to w prawo
 		int[] result = new int[2];	//result[0] - koszt obrotu, result[1] - pozycje nastepnika
 
-		//powiedzmy, øe koszt obrotu =1
+		//powiedzmy, ≈ºe koszt obrotu =1
 		//idzie w gore
 		if(xDiff == 1 && yDiff == 0) {
 			result[0] = Math.abs(countTurns(0, from.sapperPosition));

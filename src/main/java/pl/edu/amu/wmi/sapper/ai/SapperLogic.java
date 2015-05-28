@@ -203,6 +203,6 @@ public class SapperLogic {
         
         //wypisanie rozwiazania
         Map.PrintSolution(SolutionPathList);
-        System.out.println("Koszt przejœcia (w sekundach): " + pathCost);
+        System.out.println("Koszt przejÄ™cia (w sekundach): " + pathCost);
 	}
 }

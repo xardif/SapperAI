@@ -13,6 +13,7 @@ public class Main {
 		//bomba
 		Bomb b = new Bomb(Type.C4, 2, 180, true);
 		map.setField(15, 15, b);
+
 		
 		//blokady
 		map.setField(2, 3, new Blockade());
