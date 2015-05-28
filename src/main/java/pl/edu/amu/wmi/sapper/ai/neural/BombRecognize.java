@@ -1,6 +1,7 @@
 package pl.edu.amu.wmi.sapper.ai.neural;
 
-import org.encog.engine.network.activation.ActivationElliott;
+import javafx.scene.image.*;
+import org.encog.engine.network.activation.*;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
@@ -11,11 +12,14 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.Propagation;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
+import org.encog.util.ImageSize;
 import org.encog.util.downsample.Downsample;
 import org.encog.util.downsample.RGBDownsample;
+import pl.edu.amu.wmi.sapper.ui.ImageUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Image;
 import java.util.Arrays;
 import java.util.TreeMap;
 
@@ -56,6 +60,7 @@ public class BombRecognize {
         createNetwork();
 
         trainNetwork();
+
     }
 
     private void trainNetwork() {
@@ -87,7 +92,7 @@ public class BombRecognize {
             double[] idealData = new double[outputNeurons];
 
             //System.out.println(inputData.length + " " + Arrays.toString(inputData));
-            //System.out.println(Arrays.toString(idealData));
+            System.out.println(Arrays.toString(idealData));
 
             Arrays.fill(idealData, 0f);
             idealData[i++] = 1f;
@@ -111,9 +116,13 @@ public class BombRecognize {
     public String recognize(Image image){
         MLData inputData = new BasicMLData(downsample.downSample(image, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT));
         int result = network.classify(inputData);
-        double[] outputData = network.compute(inputData).getData();
-        //System.out.println(Arrays.toString(outputData));
         return bombNames[result];
+    }
+
+    public javafx.scene.image.Image getSampledData(Image image){
+        double[] inputData = downsample.downSample(image, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT);
+        ImageSize is = new ImageSize(image);
+        return ImageUtil.createImage(inputData, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT, is.getWidth(), is.getHeight());
     }
 
     public static String[] getBombNames() {
