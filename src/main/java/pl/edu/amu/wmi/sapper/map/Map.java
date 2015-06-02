@@ -1,6 +1,7 @@
 package pl.edu.amu.wmi.sapper.map;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.Civillians;
@@ -39,6 +40,19 @@ public class Map {
 	
 	public void setField(int x, int y, FieldObject fieldObject) {
 		fields[x][y].getObjects().add(fieldObject);
+	}
+	
+	public static List<Bomb> getAllBombs() {
+		List<Bomb> result = new ArrayList<>();
+		for(Field[] line: fields) {
+			for(Field field: line) {
+				List<FieldObject> objects = field.getObjects(); 
+				for(FieldObject object: objects)
+					if(object instanceof Bomb)
+						result.add((Bomb) object);
+			}
+		}
+		return result;		
 	}
 		
 	static public void PrintSolution(ArrayList<Field> solutionPathList) {

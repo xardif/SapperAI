@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Set;
-import java.util.TreeSet;
 
 import pl.edu.amu.wmi.sapper.map.objects.types.BombSize;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
@@ -57,9 +55,9 @@ public class BombPriorityTree {
 	}
 	
 	/**
-	 * Buduje drzewo decyzyjne na podstawie plików ARFF do szacowania priorytetu rozbrojenia danej bomby.
+	 * Buduje drzewo decyzyjne na podstawie plik��w ARFF do szacowania priorytetu rozbrojenia danej bomby.
 	 * 
-	 * @return obiekt DecisionTree reprezentujący wytrenowane drzewo.
+	 * @return obiekt DecisionTree reprezentuj��cy wytrenowane drzewo.
 	 */
 	public static BombPriorityTree buildBombPriorityTree() {
 		BombPriorityTree result = new BombPriorityTree();
@@ -87,6 +85,34 @@ public class BombPriorityTree {
 		//System.out.println("Priority: " + currentResult.toString());
 		
 		return currentResult;
+	}
+	
+	
+
+	public Queue<BombType> sortBombsByPriority(Collection<BombType> collection) {
+		
+		List<BombType> list = new ArrayList<>();
+		for(BombType bomb: collection)
+			list.add(bomb);
+		
+		Collections.sort(list, new Comparator<BombType>() {
+			@Override
+			public int compare(BombType o1, BombType o2) {
+				return getBombPriority(o2).compareTo(getBombPriority(o1));
+			}
+		});
+		
+		Queue<BombType> result = new ArrayDeque<>();
+		
+		for(BombType bomb: list)
+			result.add(bomb);
+		
+		return result;
+		
+	}
+	
+	private void addTree(BombPriority priority, J48 tree) {
+		priorityTrees.put(priority, tree);
 	}
 	
 	private double getProbabilityForPriority(BombPriority priority, BombType bomb) {
@@ -119,33 +145,7 @@ public class BombPriorityTree {
 			return -1;
 		}
 	}
-
-	public Queue<BombType> sortBombsByPriority(Collection<BombType> collection) {
-		
-		List<BombType> list = new ArrayList<>();
-		for(BombType bomb: collection)
-			list.add(bomb);
-		
-		list.sort(new Comparator<BombType>() {
-			@Override
-			public int compare(BombType o1, BombType o2) {
-				return getBombPriority(o2).compareTo(getBombPriority(o1));
-			}
-		});
-		
-		Queue<BombType> result = new ArrayDeque<>();
-		
-		for(BombType bomb: list)
-			result.add(bomb);
-		
-		return result;
-		
-	}
 	
-	private void addTree(BombPriority priority, J48 tree) {
-		priorityTrees.put(priority, tree);
-	}
-
 	@SuppressWarnings("unchecked")
 	private static Instances prepareTrainingSet(BombPriority priority) {
 		try {
