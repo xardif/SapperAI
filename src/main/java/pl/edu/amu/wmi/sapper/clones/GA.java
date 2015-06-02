@@ -2,14 +2,10 @@ package pl.edu.amu.wmi.sapper.clones;
 
 public class GA {
     public static void main(String[] args) {
+        FitnessCalc.setSolution("111110100000111110100");
 
-        // Ustawiamy skille osobnika na te, które chcemy uzyskaæ
-        FitnessCalc.setSolution("1111000000000000000000000000000000000000000000000000000000001111");
-
-        // Tworzymy pocz¹tkow¹ populacje
         Population myPop = new Population(50, true);
 
-        // Ewolucja populacji dopóki nie znajdziemy optymalnego rozwi¹zania
         int generationCount = 0;
         while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness()) {
             generationCount++;

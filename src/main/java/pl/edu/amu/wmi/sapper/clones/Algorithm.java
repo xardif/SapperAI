@@ -2,31 +2,31 @@ package pl.edu.amu.wmi.sapper.clones;
 
 
 public class Algorithm {
-    /* Parametry algorytmu genetycznego */
+
     private static final double uniformRate = 0.5;
     private static final double mutationRate = 0.015;
     private static final int tournamentSize = 5;
     private static final boolean elitism = true;
 
-    /* Metody publiczne */
 
-    // Ewolucja populacji
+
+
     public static Population evolvePopulation(Population pop) {
         Population newPopulation = new Population(pop.size(), false);
 
-        // 'Przechowywanie' najlepszych jednostek
+
         if (elitism) {
             newPopulation.saveIndividual(0, pop.getFittest());
         }
 
-        // Crossover populacji
+
         int elitismOffset;
         if (elitism) {
             elitismOffset = 1;
         } else {
             elitismOffset = 0;
         }
-        // Po rozmiarze populacji lecimy pêtl¹, tworz¹c nowe osobniki
+
         for (int i = elitismOffset; i < pop.size(); i++) {
             Individual indiv1 = tournamentSelection(pop);
             Individual indiv2 = tournamentSelection(pop);
@@ -34,7 +34,7 @@ public class Algorithm {
             newPopulation.saveIndividual(i, newIndiv);
         }
 
-        // Mutacja populacji
+
         for (int i = elitismOffset; i < newPopulation.size(); i++) {
             mutate(newPopulation.getIndividual(i));
         }
@@ -42,10 +42,10 @@ public class Algorithm {
         return newPopulation;
     }
 
-    // Crossover osobnika
+
     private static Individual crossover(Individual indiv1, Individual indiv2) {
         Individual newSol = new Individual();
-        // Pêtla po genach osobnika
+
         for (int i = 0; i < indiv1.size(); i++) {
             // Crossover
             if (Math.random() <= uniformRate) {
@@ -57,12 +57,12 @@ public class Algorithm {
         return newSol;
     }
 
-    // Mutacja osobnika
+
     private static void mutate(Individual indiv) {
-        // Pêtla po genach osobnika
+
         for (int i = 0; i < indiv.size(); i++) {
             if (Math.random() <= mutationRate) {
-                // Tworzy póki co randomowy gen
+
                 byte gene = (byte) Math.round(Math.random());
                 indiv.setGene(i, gene);
             }

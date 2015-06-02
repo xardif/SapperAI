@@ -2,12 +2,12 @@ package pl.edu.amu.wmi.sapper.clones;
 
 public class Individual {
 
-    static int defaultGeneLength = 64;
+    static int defaultGeneLength = 21;
     private byte[] genes = new byte[defaultGeneLength];
     // Cache
     private int fitness = 0;
 
-    // Tworzenie randomowego osobnika
+
     public void generateIndividual() {
         for (int i = 0; i < size(); i++) {
             byte gene = (byte) Math.round(Math.random());
