@@ -7,13 +7,18 @@ public class Individual {
     // Cache
     private int fitness = 0;
 
-
+    // Create a random individual
     public void generateIndividual() {
         for (int i = 0; i < size(); i++) {
             byte gene = (byte) Math.round(Math.random());
             genes[i] = gene;
         }
     }
+
+    // Use this if you want to create individuals with different gene lengths
+   /* public static void setDefaultGeneLength(int length) {
+        defaultGeneLength = length;
+    }*/
 
     /* Getters and setters */
 

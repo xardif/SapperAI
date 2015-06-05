@@ -2,10 +2,11 @@ package pl.edu.amu.wmi.sapper.clones;
 
 public class GA {
     public static void main(String[] args) {
+        // Set a candidate solution
         FitnessCalc.setSolution("111110100000111110100");
-
+        // Create an initial population
         Population myPop = new Population(50, true);
-
+        // Evolve our population until we reach an optimum solution
         int generationCount = 0;
         while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness()) {
             generationCount++;
