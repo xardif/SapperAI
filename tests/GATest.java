@@ -1,9 +1,13 @@
-package pl.edu.amu.wmi.sapper.clones;
+import org.junit.Test;
+import pl.edu.amu.wmi.sapper.clones.Algorithm;
+import pl.edu.amu.wmi.sapper.clones.FitnessCalc;
+import pl.edu.amu.wmi.sapper.clones.Population;
+import pl.edu.amu.wmi.sapper.clones.Skills;
 
 
-public class GA {
-
-    public static void main(String[] args) {
+public class GATest {
+    @Test
+    public  void test() {
 
         Skills solution= new Skills();
 
