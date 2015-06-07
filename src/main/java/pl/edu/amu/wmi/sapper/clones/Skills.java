@@ -25,7 +25,7 @@ public class Skills {
 
         for(int i=0; i<list.size();i++){
             types.add(list.get(i).getMaterial());
-            System.out.println(list.get(i).getMaterial());
+          //System.out.println(list.get(i).getMaterial());
         }
 
         double priorityLevel =  1.0/(list.size());
@@ -79,12 +79,10 @@ public class Skills {
 
 
 
-
-
-        System.out.println(countNuke);
+       /* System.out.println(countNuke);
         System.out.println("Fake priority: "+FakeBombPriority);
         System.out.println("Nuke priority: "+NukePriority);
-        System.out.println("C4 priority: "+C4Priority);
+        System.out.println("C4 priority: "+C4Priority);*/
 
         String skillsForNukeBomb = "";
         String skillsForC4Bomb = "";

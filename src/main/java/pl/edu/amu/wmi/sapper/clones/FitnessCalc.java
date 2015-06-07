@@ -4,7 +4,7 @@ package pl.edu.amu.wmi.sapper.clones;
 
 public class FitnessCalc {
 
-        static byte[] solution = new byte[21];
+        public static byte[] solution = new byte[21];
         /* Public methods */
         // Set a candidate solution as a byte array
         public static void setSolution(byte[] newSolution) {
@@ -26,7 +26,7 @@ public class FitnessCalc {
         }
 
         // Calculate inidividuals fittness by comparing it to our candidate solution
-        static int getFitness(Individual individual) {
+        public static int getFitness(Individual individual) {
             int fitness = 0;
             for (int i = 0; i < individual.size() && i < solution.length; i++) {
                 if (individual.getGene(i) == solution[i])
