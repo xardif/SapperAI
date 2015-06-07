@@ -27,7 +27,7 @@ public class Skills {
         for(int i=0; i<list.size();i++)
             System.out.println(list.get(i).getMaterial());
 
-        skills="111110100000111110100";
+        String skills="111110100000111110100";
         return skills;
     }
 }
