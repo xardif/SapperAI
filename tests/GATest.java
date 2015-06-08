@@ -8,7 +8,6 @@ import pl.edu.amu.wmi.sapper.clones.Skills;
 public class GATest {
     @Test
     public  void test() {
-
         Skills solution= new Skills();
 
         // Set a candidate solution
@@ -26,9 +25,5 @@ public class GATest {
         System.out.println("Generation: " + generationCount);
         System.out.println("Genes:");
         System.out.println(myPop.getFittest());
-
-
-
-
     }
 }
