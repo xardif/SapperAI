@@ -9,7 +9,6 @@ public class GATest {
     @Test
     public  void test() {
         Skills solution= new Skills();
-
         // Set a candidate solution
         FitnessCalc.setSolution(solution.getskills());
         /* Create an initial population */
