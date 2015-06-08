@@ -9,10 +9,13 @@ public class GATest {
     @Test
     public  void test() {
         Skills solution= new Skills();
+
         // Set a candidate solution
         FitnessCalc.setSolution(solution.getskills());
+
         /* Create an initial population */
         Population myPop = new Population(50, true);
+        
         // Evolve our population until we reach an optimum solution
         int generationCount = 0;
         while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness()) {
