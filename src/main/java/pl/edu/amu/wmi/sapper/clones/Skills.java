@@ -93,69 +93,69 @@ public class Skills {
         String skillsForDirtyBomb = "";
 
         if(NukePriority>=0.66)
-            skillsForNukeBomb="111";
+            skillsForNukeBomb="11";
         else if (NukePriority>=0.33 && NukePriority<0.66)
-            skillsForNukeBomb="110";
+            skillsForNukeBomb="10";
         else if(NukePriority<0.33 && NukePriority>0)
-            skillsForNukeBomb="100";
+            skillsForNukeBomb="01";
         else
-            skillsForNukeBomb="000";
+            skillsForNukeBomb="00";
 
         if(C4Priority>=0.66)
-            skillsForC4Bomb="111";
+            skillsForC4Bomb="11";
         else if (C4Priority>=0.33 && C4Priority<0.66)
-            skillsForC4Bomb="110";
+            skillsForC4Bomb="10";
         else if(C4Priority<0.33 && C4Priority>0)
-            skillsForC4Bomb="100";
+            skillsForC4Bomb="01";
         else
-            skillsForC4Bomb="000";
+            skillsForC4Bomb="00";
 
         if(DirtyBombPriority>=0.66)
-            skillsForDirtyBomb="111";
+            skillsForDirtyBomb="11";
         else if (DirtyBombPriority>=0.33 && DirtyBombPriority<0.66)
-            skillsForDirtyBomb="110";
+            skillsForDirtyBomb="10";
         else if(DirtyBombPriority<0.33 && DirtyBombPriority>0)
-            skillsForDirtyBomb="100";
+            skillsForDirtyBomb="01";
         else
-            skillsForDirtyBomb="000";
+            skillsForDirtyBomb="00";
 
         if(ChemicalBombPriority>=0.66)
-            skillsForChemicalBomb="111";
+            skillsForChemicalBomb="11";
         else if (ChemicalBombPriority>=0.33 && ChemicalBombPriority<0.66)
-            skillsForChemicalBomb="110";
+            skillsForChemicalBomb="10";
         else if(ChemicalBombPriority<0.33 && ChemicalBombPriority>0)
-            skillsForChemicalBomb="100";
+            skillsForChemicalBomb="01";
         else
-            skillsForChemicalBomb="000";
+            skillsForChemicalBomb="00";
 
 
         if(DynamitePriority>=0.66)
-            skillsForDynamiteBomb="111";
+            skillsForDynamiteBomb="11";
         else if (DynamitePriority>=0.33 && DynamitePriority<0.66)
-            skillsForDynamiteBomb="110";
+            skillsForDynamiteBomb="10";
         else if(DynamitePriority<0.33 && DynamitePriority>0)
-            skillsForDynamiteBomb="100";
+            skillsForDynamiteBomb="01";
         else
-            skillsForDynamiteBomb="000";
+            skillsForDynamiteBomb="00";
 
         if(HomeMadeBombPriority>=0.66)
-            skillsForHomeMadeBomb="111";
+            skillsForHomeMadeBomb="11";
         else if (HomeMadeBombPriority>=0.33 && HomeMadeBombPriority<0.66)
-            skillsForHomeMadeBomb="110";
+            skillsForHomeMadeBomb="10";
         else if(HomeMadeBombPriority<0.33 && HomeMadeBombPriority>0)
-            skillsForHomeMadeBomb="100";
+            skillsForHomeMadeBomb="01";
         else
-            skillsForHomeMadeBomb="000";
+            skillsForHomeMadeBomb="00";
 
 
         if(FakeBombPriority>=0.66)
-            skillsForFakeBomb="111";
+            skillsForFakeBomb="11";
         else if (FakeBombPriority>=0.33 && FakeBombPriority<0.66)
-            skillsForFakeBomb="110";
+            skillsForFakeBomb="10";
         else if(FakeBombPriority<0.33 && FakeBombPriority>0)
-            skillsForFakeBomb="100";
+            skillsForFakeBomb="01";
         else
-            skillsForFakeBomb="000";
+            skillsForFakeBomb="00";
 
 
         String skills=skillsForNukeBomb+skillsForC4Bomb+skillsForDirtyBomb+skillsForChemicalBomb+skillsForDynamiteBomb+skillsForHomeMadeBomb+skillsForFakeBomb;
