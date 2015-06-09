@@ -18,6 +18,15 @@ public class BombType {
 	
 	public BombType() {}
 	
+	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive) {
+		this.radius = radius;
+		this.type = type;
+		this.size = size;
+		this.timeToDetonation = timeToDetonation;
+		this.isActive = isActive;
+		this.isDetonated = false;
+	}
+	
 	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive, String imagePath) {
 		this.radius = radius;
 		this.type = type;
