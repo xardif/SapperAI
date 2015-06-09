@@ -1,19 +1,21 @@
 package pl.edu.amu.wmi.sapper;
 
+import pl.edu.amu.wmi.sapper.ai.SapperLogic;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.Civilians;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
+import pl.edu.amu.wmi.sapper.map.objects.types.BombSize;
+import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
 import pl.edu.amu.wmi.sapper.map.objects.types.Type;
 
 public class Main {
 
 	public static void init(Map map) {
 		//bomba
-		Bomb b = new Bomb(Type.C4, 2, 180, true);
-		map.setField(15, 15, b);
-
+		BombType b = new BombType(10, Type.C4, BombSize.MEDIUM, 180, true);
+		map.setField(15, 15, new Bomb());
 		
 		//blokady
 		map.setField(2, 3, new Blockade());
@@ -59,9 +61,9 @@ public class Main {
 
 
 		//saper
-		Sapper s = new Sapper(map.getField(0, 0));
-		map.setField(0, 0, s);
-		s.getSapperLogic().findPath(s.getSapperLogic().getField(), map.getField(15, 15));
+		SapperLogic s = new SapperLogic(map.getField(0, 0));
+		map.setField(0, 0, new Sapper());
+		s.findPath(s.getField(), map.getField(15, 15), map);
 	}
 	
 	public static void main(String[] args) {

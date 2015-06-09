@@ -100,11 +100,11 @@ public class Field implements Comparable<Object> {
 	
 	public int[] getCostAndPosition(Field from, Field to)
 	{
-		int xDiff = from.getXPosition() - to.getXPosition();	//jeżeli minus to w dół
-		int yDiff = from.getYPosition() - to.getYPosition();	//jeżeli minus to w prawo
+		int xDiff = from.getXPosition() - to.getXPosition();	//je�eli minus to w d�
+		int yDiff = from.getYPosition() - to.getYPosition();	//je�eli minus to w prawo
 		int[] result = new int[2];	//result[0] - koszt obrotu, result[1] - pozycje nastepnika
 
-		//powiedzmy, że koszt obrotu =1
+		//powiedzmy, �e koszt obrotu =1
 		//idzie w gore
 		if(xDiff == 1 && yDiff == 0) {
 			result[0] = Math.abs(countTurns(0, from.sapperPosition));
@@ -150,22 +150,22 @@ public class Field implements Comparable<Object> {
 	}
 	
 	
-	public ArrayList<Field> GetSuccessors(SapperLogic sapper, Field goalField) {
+	public ArrayList<Field> GetSuccessors(SapperLogic sapper, Field goalField, Map map) {
 		ArrayList<Field> successors = new ArrayList<Field> ();
 		
 		for (int xd=-1; xd<=1; xd++) {
 			for (int yd=-1; yd<=1; yd++) {
-				if(Map.getField(x+xd,y+yd) != null) {
-					int[] turnCost = getCostAndPosition(this, Map.getField(x+xd,y+yd));
+				if(map.getField(x+xd,y+yd) != null) {
+					int[] turnCost = getCostAndPosition(this, map.getField(x+xd,y+yd));
 					Field f;
-					if (Map.getField(x+xd,y+yd).getObjects().isEmpty())
+					if (map.getField(x+xd,y+yd).getObjects().isEmpty())
 					{
-						f = new Field (this, goalField ,Map.getField(x+xd,y+yd).gCost+turnCost[0] ,x+xd,y+yd, turnCost[1]);
+						f = new Field (this, goalField ,map.getField(x+xd,y+yd).gCost+turnCost[0] ,x+xd,y+yd, turnCost[1]);
 						if (!f.isMatch (this.parentField) && !f.isMatch (this))
 	                        successors.add(f);
 					}
-					else if (!(Map.getField(x+xd,y+yd).getObjects().get(0) instanceof Blockade)) {
-						f = new Field (this, goalField ,Map.getField(x+xd,y+yd).gCost+turnCost[0] ,x+xd,y+yd, turnCost[1]);
+					else if (!(map.getField(x+xd,y+yd).getObjects().get(0) instanceof Blockade)) {
+						f = new Field (this, goalField ,map.getField(x+xd,y+yd).gCost+turnCost[0] ,x+xd,y+yd, turnCost[1]);
 						if (!f.isMatch (this.parentField) && !f.isMatch (this))
 	                        successors.add(f);
 					}

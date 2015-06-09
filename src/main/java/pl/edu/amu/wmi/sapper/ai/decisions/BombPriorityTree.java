@@ -85,20 +85,6 @@ public class BombPriorityTree {
 		return currentResult;
 	}
 	
-	public BombPriority getBombPriority(Bomb bomb) {
-		BombPriority currentResult = BombPriority.CRITICAL;
-		BombType type = bomb.getBombType();
-		
-		for(BombPriority priority: BombPriority.values()) {
-			double current = getProbabilityForPriority(priority, type);
-			if(current == 0.0) {
-				currentResult = priority;
-			}
-		}
-		
-		return currentResult;
-	}	
-
 	public Queue<BombType> sortBombsTypesByPriority(Collection<BombType> collection) {
 		List<BombType> list = new ArrayList<>();
 		for(BombType bomb: collection)
@@ -114,26 +100,6 @@ public class BombPriorityTree {
 		Queue<BombType> result = new ArrayDeque<>();
 		
 		for(BombType bomb: list)
-			result.add(bomb);
-		
-		return result;		
-	}
-	
-	public Queue<Bomb> sortBombsByPriority(Collection<Bomb> collection) {
-		List<Bomb> list = new ArrayList<>();
-		for(Bomb bomb: collection)
-			list.add(bomb);
-		
-		Collections.sort(list, new Comparator<Bomb>() {
-			@Override
-			public int compare(Bomb o1, Bomb o2) {
-				return getBombPriority(o2).compareTo(getBombPriority(o1));
-			}
-		});
-		
-		Queue<Bomb> result = new ArrayDeque<>();
-		
-		for(Bomb bomb: list)
 			result.add(bomb);
 		
 		return result;		
