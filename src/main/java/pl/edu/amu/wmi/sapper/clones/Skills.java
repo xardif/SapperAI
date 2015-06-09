@@ -18,7 +18,7 @@ public class Skills {
         bombs.add(new BombType(10, Type.Nuke, BombSize.VERY_BIG, 10, true));
 
         System.out.println("Bombs: " + bombs.toString());
-        Queue<BombType> result = tree.sortBombsByPriority(bombs);
+        Queue<BombType> result = tree.sortBombsTypesByPriority(bombs);
         List<BombType> list = new ArrayList<>(result);
         System.out.println("Sorted bombs: " + list.toString());
         List<Type> types = new ArrayList<>();

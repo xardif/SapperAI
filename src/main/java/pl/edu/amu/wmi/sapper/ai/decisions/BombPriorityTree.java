@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombSize;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
 import pl.edu.amu.wmi.sapper.map.objects.types.Type;
@@ -81,16 +82,24 @@ public class BombPriorityTree {
 			}
 		}
 		
-		//System.out.println("Bomb: " + bomb.toString());
-		//System.out.println("Priority: " + currentResult.toString());
-		
 		return currentResult;
 	}
 	
-	
-
-	public Queue<BombType> sortBombsByPriority(Collection<BombType> collection) {
+	public BombPriority getBombPriority(Bomb bomb) {
+		BombPriority currentResult = BombPriority.CRITICAL;
+		BombType type = bomb.getBombType();
 		
+		for(BombPriority priority: BombPriority.values()) {
+			double current = getProbabilityForPriority(priority, type);
+			if(current == 0.0) {
+				currentResult = priority;
+			}
+		}
+		
+		return currentResult;
+	}	
+
+	public Queue<BombType> sortBombsTypesByPriority(Collection<BombType> collection) {
 		List<BombType> list = new ArrayList<>();
 		for(BombType bomb: collection)
 			list.add(bomb);
@@ -107,8 +116,27 @@ public class BombPriorityTree {
 		for(BombType bomb: list)
 			result.add(bomb);
 		
-		return result;
+		return result;		
+	}
+	
+	public Queue<Bomb> sortBombsByPriority(Collection<Bomb> collection) {
+		List<Bomb> list = new ArrayList<>();
+		for(Bomb bomb: collection)
+			list.add(bomb);
 		
+		Collections.sort(list, new Comparator<Bomb>() {
+			@Override
+			public int compare(Bomb o1, Bomb o2) {
+				return getBombPriority(o2).compareTo(getBombPriority(o1));
+			}
+		});
+		
+		Queue<Bomb> result = new ArrayDeque<>();
+		
+		for(Bomb bomb: list)
+			result.add(bomb);
+		
+		return result;		
 	}
 	
 	private void addTree(BombPriority priority, J48 tree) {
