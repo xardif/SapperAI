@@ -4,7 +4,7 @@ package pl.edu.amu.wmi.sapper.clones;
 
 public class FitnessCalc {
 
-        public static byte[] solution = new byte[21];
+        public static byte[] solution = new byte[14];
         /* Public methods */
         // Set a candidate solution as a byte array
         public static void setSolution(byte[] newSolution) {
