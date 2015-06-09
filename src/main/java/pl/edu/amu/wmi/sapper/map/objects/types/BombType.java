@@ -16,8 +16,6 @@ public class BombType {
 	private boolean isDetonated;
 	private Image image;
 	
-	public BombType() {}
-	
 	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive) {
 		this.radius = radius;
 		this.type = type;

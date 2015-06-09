@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
+import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
 
 public class SapperLogic {
 	private Field field;
@@ -111,11 +112,11 @@ public class SapperLogic {
 	}
 	
 	
-	public void defuseBomb(Bomb bomb) {
-		bomb.getBombType().setIsActive();
+	public void defuseBomb(BombType bomb) {
+		bomb.setIsActive();
 	}
 	
-	public void findPath(Field fieldStart, Field fieldGoal)
+	public void findPath(Field fieldStart, Field fieldGoal, Map map)
 	{
 		ArrayList<Field> SolutionPathList = new ArrayList<Field>();
 
@@ -138,7 +139,7 @@ public class SapperLogic {
             }
 
             //pobranie nastepnikow pola w ktorym obecnie sie znajdujemy
-            ArrayList<Field> successors = fieldCurrent.GetSuccessors(this, fieldGoal);
+            ArrayList<Field> successors = fieldCurrent.GetSuccessors(this, fieldGoal, map);
 
             //dla kazdego nastepnika
             for(Field fieldSuccessor : successors) {
@@ -202,7 +203,7 @@ public class SapperLogic {
         
         
         //wypisanie rozwiazania
-        Map.PrintSolution(SolutionPathList);
-        System.out.println("Koszt przejęcia (w sekundach): " + pathCost);
+        map.PrintSolution(SolutionPathList);
+        System.out.println("Koszt przej�cia (w sekundach): " + pathCost);
 	}
 }
