@@ -108,7 +108,7 @@ public class Skills {
         else if(C4Priority<0.33 && C4Priority>0)
             skillsForC4Bomb="01";
         else
-            skillsForC4Bomb="00";
+            skillsForC4Bomb="0k0";
 
         if(DirtyBombPriority>=0.66)
             skillsForDirtyBomb="11";

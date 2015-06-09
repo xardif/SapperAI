@@ -35,7 +35,6 @@ public class Algorithm {
         // Mutate population
         for (int i = elitismOffset; i < newPopulation.size(); i++)
             mutate(newPopulation.getIndividual(i));
-
         return newPopulation;
     }
 

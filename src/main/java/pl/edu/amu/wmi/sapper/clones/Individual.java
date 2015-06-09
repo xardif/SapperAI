@@ -15,12 +15,7 @@ public class Individual {
         }
     }
 
-    // Use this if you want to create individuals with different gene lengths
-   /* public static void setDefaultGeneLength(int length) {
-        defaultGeneLength = length;
-    }*/
-
-    /* Getters and setters */
+       /* Getters and setters */
 
     public byte getGene(int index) {
         return genes[index];
