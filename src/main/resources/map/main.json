@@ -5,15 +5,21 @@
     "type" : "Sapper"
   }}, {"FieldObject" : {
     "type" : "Bomb",
-    "args" : ["Nuke", 3, 50, true]
+    "mType" : "Nuke",
+    "size" : 3,
+    "timeToDetonation" : 50,
+    "isActive" : true
   }}, {"FieldObject" : {
     "type" : "Blockade"
   }}, {"FieldObject" : {
     "type" : "Civilians",
-    "args" : [500]
+    "number" : 500
   }}, {"FieldObject" : {
     "type" : "Bomb",
-    "args" : ["Nuke", 3, 50, true]
+    "mType" : "Nuke",
+    "size" : 3,
+    "timeToDetonation" : 50,
+    "isActive" : true
   }}, {"FieldObject" : {
     "type" : "Empty"
   }}, {"FieldObject" : {

@@ -11,11 +11,11 @@ public class Bomb extends FieldObject {
 		this.bombType = new BombType();
 	}
 	
-	public Bomb(Type type, int size, int timeToDetonation, boolean isActive) {
+	public Bomb(Type mType, int size, int timeToDetonation, boolean isActive) {
 		int r = size*2;	//tu powinno by� dobranie pola ra�enia na podstawie materia�u i wielko�ci
-		this.bombType = new BombType(r, type, BombSize.valueOf(size), timeToDetonation, isActive);
+		this.bombType = new BombType(r, mType, BombSize.valueOf(size), timeToDetonation, isActive);
 	}
-	
+
 	public BombType getBombType() {
 		return bombType;
 	}
