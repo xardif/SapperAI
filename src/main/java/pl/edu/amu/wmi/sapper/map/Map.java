@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
-import pl.edu.amu.wmi.sapper.map.objects.Civillians;
+import pl.edu.amu.wmi.sapper.map.objects.Civilians;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
@@ -76,7 +76,7 @@ public class Map {
 						System.out.print("S ");	//sapper
 					else if (Map.getField(i,j).getObjects().get(0) instanceof Bomb)
 						System.out.print("! ");	//bomb
-					else if(Map.getField(i,j).getObjects().get(0) instanceof Civillians)
+					else if(Map.getField(i,j).getObjects().get(0) instanceof Civilians)
 						System.out.print("o%"); //civillians
 					moveCounter++;
 				}
@@ -84,7 +84,7 @@ public class Map {
 					System.out.print(". ");	//road
 				else if(Map.getField(i,j).getObjects().get(0) instanceof Blockade)
 					System.out.print("# "); //blockade
-				else if(Map.getField(i,j).getObjects().get(0) instanceof Civillians)
+				else if(Map.getField(i,j).getObjects().get(0) instanceof Civilians)
 					System.out.print("% "); //civillians
 			}
 			System.out.println("");

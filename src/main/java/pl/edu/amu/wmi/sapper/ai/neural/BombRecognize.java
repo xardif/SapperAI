@@ -91,11 +91,11 @@ public class BombRecognize {
             double[] inputData = downsample.downSample(image, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT);
             double[] idealData = new double[outputNeurons];
 
-            //System.out.println(inputData.length + " " + Arrays.toString(inputData));
-            System.out.println(Arrays.toString(idealData));
-
             Arrays.fill(idealData, 0f);
             idealData[i++] = 1f;
+
+            //System.out.println(inputData.length + " " + Arrays.toString(inputData));
+            //System.out.println(Arrays.toString(idealData));
 
             MLDataPair pair = new BasicMLDataPair(new BasicMLData(inputData),
                     new BasicMLData(idealData));

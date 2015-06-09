@@ -173,14 +173,14 @@ public class BombPriorityTree {
 			return -1;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private static Instances prepareTrainingSet(BombPriority priority) {
 		try {
 			DataSource dataSource = new DataSource(priorityToAAFF.get(priority));
 			Instances instances = dataSource.getDataSet();
 			instances.setClassIndex(instances.numAttributes() - 1);
-			Enumeration<Attribute> e = (Enumeration<Attribute>) instances.enumerateAttributes();
+			Enumeration<Attribute> e = (Enumeration<Attribute>) instances.<Attribute>enumerateAttributes();
 			if(attributes.isEmpty())
 			while(e.hasMoreElements())
 				attributes.add(e.nextElement());

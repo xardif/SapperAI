@@ -1,20 +1,19 @@
 package pl.edu.amu.wmi.sapper.map.objects.types;
 
 public enum Type {
-	C4, Nuke, DirtyBomb, FakeBomb, HomeMadeBomb, Dynamite, ChemicalBomb;
-	
+	C4("C4"), Nuke("Nuke"),
+	DirtyBomb("DirtyBomb"), FakeBomb("FakeBomb"), HomeMadeBomb("HomeMadeBomb"),
+	Dynamite("Dynamite"), ChemicalBomb("ChemicalBomb");
+
+	private final String name;
+
+	Type(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		switch(this) {
-		case C4: return "C4";
-		case ChemicalBomb: return "ChemicalBomb";
-		case DirtyBomb: return "DirtyBomb";
-		case Dynamite: return "Dynamite";
-		case FakeBomb: return "FakeBomb";
-		case HomeMadeBomb: return "HomeMadeBomb";
-		case Nuke: return "Nuke";
-		default: return "UNKNOWN";		
-		}
+		return name;
 	}
 	
 }
