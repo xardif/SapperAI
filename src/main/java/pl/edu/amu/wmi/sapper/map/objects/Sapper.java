@@ -1,10 +1,9 @@
 package pl.edu.amu.wmi.sapper.map.objects;
 
-public class Blockade extends FieldObject {
+public class Sapper extends FieldObject {
 
     @Override
     public String toString() {
-        return "Blockade";
+        return "Sapper";
     }
-
 }

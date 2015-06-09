@@ -8,7 +8,7 @@ public class JsonParserTest {
     @Test
     public void mapParseTest(){
         try {
-            JsonParser.parse("/map/main.json");
+            System.out.println(JsonParser.parse("/map/main.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }

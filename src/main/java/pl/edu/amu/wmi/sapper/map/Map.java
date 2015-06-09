@@ -1,6 +1,7 @@
 package pl.edu.amu.wmi.sapper.map;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -11,29 +12,32 @@ import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
 
 public class Map {
-	private int X = 16;
-	private int Y = 16;
-	private Field[][] fields = new Field[X][Y];
+	private int rows;
+	private int cols;
+	private Field[][] fields;
 	
-	public Map() {
-		for(int x=0; x<X; x++)
-			for(int y=0; y<Y; y++)
+	public Map(int rows, int cols) {
+		this.rows = rows;
+		this.cols = cols;
+        fields = new Field[rows][cols];
+		for(int x=0; x< this.rows; x++)
+			for(int y=0; y< this.cols; y++)
 				fields[x][y] = new Field(null, null, 1, x, y, -1);
 	}
 	
 	public Field getField(int x, int y) {
-		if (x<0 || x>=X)
+		if (x<0 || x>= rows)
 			return null;
-		else if (y<0 || y>=Y)
+		else if (y<0 || y>= cols)
 			return null;
 		else
 			return fields[x][y];
 	}
 	
 	public int getFieldCost(int x, int y) {
-		if (x<0 || x>=X)
+		if (x<0 || x>= rows)
 			return -1;
-		else if (y<0 || y>=Y)
+		else if (y<0 || y>= cols)
 			return -1;
 		else
 			return fields[x][y].getGCost();
@@ -43,12 +47,12 @@ public class Map {
 		fields[x][y].getObjects().add(fieldObject);
 	}
 	
-	public int getX() {
-		return X;
+	public int getRows() {
+		return rows;
 	}
 
-	public int getY() {
-		return Y;
+	public int getCols() {
+		return cols;
 	}
 	
 	public List<Bomb> getAllBombs() {
@@ -67,8 +71,8 @@ public class Map {
 	public void PrintSolution(ArrayList<Field> solutionPathList) {
 		int moveCounter = 0;
 		
-		for(int i=0; i<X; i++) {
-			for(int j=0; j<Y; j++) {
+		for(int i=0; i< rows; i++) {
+			for(int j=0; j< cols; j++) {
 				boolean solutionNode = false;
 				for(Field n : solutionPathList) {
 					Field tmp = new Field(null,null,0,i,j, -1);
@@ -102,13 +106,13 @@ public class Map {
 	}
 	
 	public static Map buildRandomMap() {
-		Map map = new Map();
+		Map map = new Map(18,18);
 		
 		map.setField(0, 0, new Sapper());
 		
 		Random random = new Random();
-		for(int x = 0; x < map.getX(); x++)
-			for(int y = 1; y < map.getY(); y++) {
+		for(int x = 0; x < map.getRows(); x++)
+			for(int y = 1; y < map.getCols(); y++) {
 						
 				int decision = random.nextInt(10);
 				
@@ -122,6 +126,15 @@ public class Map {
 		
 		return map;
 	}
-	
-	
+
+
+
+    @Override
+    public String toString() {
+        return "Map{" +
+                "rows=" + rows +
+                ", cols=" + cols +
+                ", fields=" + Arrays.deepToString(fields) +
+                '}';
+    }
 }

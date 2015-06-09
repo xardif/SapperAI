@@ -174,4 +174,11 @@ public class Field implements Comparable<Object> {
 		}
 		return successors;
 	}
+
+	@Override
+	public String toString() {
+		return "Field{" +
+				"objects=" + objects +
+				'}';
+	}
 }

@@ -5,6 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
+import pl.edu.amu.wmi.sapper.map.Field;
 
 public class BombType {
 	
@@ -15,6 +16,7 @@ public class BombType {
 	private boolean isActive;
 	private boolean isDetonated;
 	private Image image;
+	private Field field;
 	
 	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive) {
 		this.radius = radius;
@@ -89,5 +91,12 @@ public class BombType {
 		return null;
 		
 	}
-	
+
+	public Field getField() {
+		return field;
+	}
+
+	public void setField(Field field) {
+		this.field = field;
+	}
 }
