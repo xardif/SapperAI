@@ -1,0 +1,26 @@
+{
+  "rows" : 3,
+  "cols" : 3,
+  "map" : [{"FieldObject" : {
+    "type" : "Sapper"
+  }}, {"FieldObject" : {
+    "type" : "Bomb",
+    "args" : ["Nuke", 3, 50, true]
+  }}, {"FieldObject" : {
+    "type" : "Blockade"
+  }}, {"FieldObject" : {
+    "type" : "Civilians",
+    "args" : [500]
+  }}, {"FieldObject" : {
+    "type" : "Bomb",
+    "args" : ["Nuke", 3, 50, true]
+  }}, {"FieldObject" : {
+    "type" : "Empty"
+  }}, {"FieldObject" : {
+    "type" : "Empty"
+  }}, {"FieldObject" : {
+    "type" : "Empty"
+  }}, {"FieldObject" : {
+    "type" : "Empty"
+  }}]
+}

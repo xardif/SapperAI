@@ -1,26 +1,17 @@
 package pl.edu.amu.wmi.sapper.ui;
 
-
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.ArcType;
-import org.encog.util.ImageSize;
 import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 
 public class Controller {
 
@@ -41,7 +32,7 @@ public class Controller {
 
         final BombRecognize bombRecognize = new BombRecognize();
 
-        String name = "chemical";
+        String name = "bio";
         String path = "/test_img/" + name + ".jpg";
 
         Image img = new ImageIcon(BombRecognize.class.getResource(path)).getImage();
@@ -49,7 +40,6 @@ public class Controller {
 
 
         foregroundCanvas.getGraphicsContext2D().drawImage(sampledImage, 0, 0);
-
         foregroundCanvas.getGraphicsContext2D().drawImage(ImageUtil.getFXImage(img), 0, 100);
 
         /*

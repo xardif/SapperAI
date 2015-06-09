@@ -3,7 +3,7 @@ package pl.edu.amu.wmi.sapper;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
-import pl.edu.amu.wmi.sapper.map.objects.Civillians;
+import pl.edu.amu.wmi.sapper.map.objects.Civilians;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
 import pl.edu.amu.wmi.sapper.map.objects.types.Type;
 
@@ -52,10 +52,10 @@ public class Main {
 		map.setField(14, 15, new Blockade());
 		
 		//cywile
-		map.setField(11, 15, new Civillians(20));
-		map.setField(13, 12, new Civillians(87));
-		map.setField(13, 14, new Civillians(100));
-		map.setField(15, 10, new Civillians(11));
+		map.setField(11, 15, new Civilians(20));
+		map.setField(13, 12, new Civilians(87));
+		map.setField(13, 14, new Civilians(100));
+		map.setField(15, 10, new Civilians(11));
 
 
 		//saper
