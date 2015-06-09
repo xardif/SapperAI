@@ -2,7 +2,7 @@ package pl.edu.amu.wmi.sapper.clones;
 
 public class Individual {
 
-    static int defaultGeneLength = 21;
+    static int defaultGeneLength = 14;
     private byte[] genes = new byte[defaultGeneLength];
     // Cache
     private int fitness = 0;
