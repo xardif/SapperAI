@@ -2,6 +2,7 @@ package pl.edu.amu.wmi.sapper.map;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.Civilians;
@@ -10,9 +11,9 @@ import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
 
 public class Map {
-	private static int X = 16;
-	private static int Y = 16;
-	private static Field[][] fields = new Field[X][Y];
+	private int X = 16;
+	private int Y = 16;
+	private Field[][] fields = new Field[X][Y];
 	
 	public Map() {
 		for(int x=0; x<X; x++)
@@ -20,7 +21,7 @@ public class Map {
 				fields[x][y] = new Field(null, null, 1, x, y, -1);
 	}
 	
-	public static Field getField(int x, int y) {
+	public Field getField(int x, int y) {
 		if (x<0 || x>=X)
 			return null;
 		else if (y<0 || y>=Y)
@@ -29,7 +30,7 @@ public class Map {
 			return fields[x][y];
 	}
 	
-	public static int getFieldCost(int x, int y) {
+	public int getFieldCost(int x, int y) {
 		if (x<0 || x>=X)
 			return -1;
 		else if (y<0 || y>=Y)
@@ -42,7 +43,15 @@ public class Map {
 		fields[x][y].getObjects().add(fieldObject);
 	}
 	
-	public static List<Bomb> getAllBombs() {
+	public int getX() {
+		return X;
+	}
+
+	public int getY() {
+		return Y;
+	}
+	
+	public List<Bomb> getAllBombs() {
 		List<Bomb> result = new ArrayList<>();
 		for(Field[] line: fields) {
 			for(Field field: line) {
@@ -55,7 +64,7 @@ public class Map {
 		return result;		
 	}
 		
-	static public void PrintSolution(ArrayList<Field> solutionPathList) {
+	public void PrintSolution(ArrayList<Field> solutionPathList) {
 		int moveCounter = 0;
 		
 		for(int i=0; i<X; i++) {
@@ -70,21 +79,21 @@ public class Map {
 					}
 				}
 				if(solutionNode) {
-					if (Map.getField(i,j).getObjects().isEmpty())
+					if (getField(i,j).getObjects().isEmpty())
 						System.out.print("o "); //solution path
-					else if (Map.getField(i,j).getObjects().get(0) instanceof Sapper)
+					else if (getField(i,j).getObjects().get(0) instanceof Sapper)
 						System.out.print("S ");	//sapper
-					else if (Map.getField(i,j).getObjects().get(0) instanceof Bomb)
+					else if (getField(i,j).getObjects().get(0) instanceof Bomb)
 						System.out.print("! ");	//bomb
-					else if(Map.getField(i,j).getObjects().get(0) instanceof Civilians)
+					else if(getField(i,j).getObjects().get(0) instanceof Civilians)
 						System.out.print("o%"); //civillians
 					moveCounter++;
 				}
-				else if (Map.getField(i,j).getObjects().isEmpty())
+				else if (getField(i,j).getObjects().isEmpty())
 					System.out.print(". ");	//road
-				else if(Map.getField(i,j).getObjects().get(0) instanceof Blockade)
+				else if(getField(i,j).getObjects().get(0) instanceof Blockade)
 					System.out.print("# "); //blockade
-				else if(Map.getField(i,j).getObjects().get(0) instanceof Civilians)
+				else if(getField(i,j).getObjects().get(0) instanceof Civilians)
 					System.out.print("% "); //civillians
 			}
 			System.out.println("");
@@ -92,7 +101,27 @@ public class Map {
 		System.out.println("Liczba krokow: " + moveCounter);
 	}
 	
-	
+	public static Map buildRandomMap() {
+		Map map = new Map();
+		
+		map.setField(0, 0, new Sapper());
+		
+		Random random = new Random();
+		for(int x = 0; x < map.getX(); x++)
+			for(int y = 1; y < map.getY(); y++) {
+						
+				int decision = random.nextInt(10);
+				
+				switch(decision) {
+				
+				
+				
+				}
+				
+			}
+		
+		return map;
+	}
 	
 	
 }
