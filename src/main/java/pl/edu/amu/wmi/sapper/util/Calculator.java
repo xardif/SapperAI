@@ -22,9 +22,9 @@ public class Calculator {
 		int radius = bomb.getRadius();
 		
 		int leftBorder = ((center.getXPosition() - radius) < 0) ? 0 : (center.getXPosition() - radius);
-		int rightBorder = ((center.getXPosition() + radius) >= 20) ? 0 : (center.getXPosition() + radius);
+		int rightBorder = ((center.getXPosition() + radius) >= map.getRows()) ? map.getRows() - 1 : (center.getXPosition() + radius);
 		int topBorder = ((center.getYPosition() - radius) < 0) ? 0 : (center.getYPosition() - radius);
-		int bottomBorder = ((center.getYPosition() + radius) >= 20) ? 0 : (center.getYPosition() + radius);
+		int bottomBorder = ((center.getYPosition() + radius) >= map.getCols()) ? map.getCols() - 1 : (center.getYPosition() + radius);
 		
 		
 		for(int x = leftBorder; x < rightBorder; x++) {

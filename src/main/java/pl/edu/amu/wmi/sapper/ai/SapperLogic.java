@@ -1,19 +1,23 @@
 package pl.edu.amu.wmi.sapper.ai;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
+import pl.edu.amu.wmi.sapper.map.objects.types.Type;
 
 public class SapperLogic {
 	private Field field;
 	private int turnPosition;	//0-N, 1-NE, 2-E, 3-SE, 4-S, 5-SW, 6-W, 7-NW
+	private java.util.Map<Type, Integer> skills;
 	
 	public SapperLogic(Field field) {
 		setField(field);
+		skills = new HashMap<>();
 		this.turnPosition = 2;	//zak�adamy, �e po starcie programu saper jest zwr�cony do g�ry
 	}
 	
@@ -30,6 +34,14 @@ public class SapperLogic {
 	
 	public void turnLeft() {
 		this.turnPosition = (this.turnPosition - 1)%8;
+	}
+	
+	public java.util.Map<Type, Integer> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(java.util.Map<Type, Integer> skills) {
+		this.skills = skills;
 	}
 	
 	public int movesCount(Field to) {

@@ -67,6 +67,18 @@ public class Map {
 		}
 		return result;		
 	}
+	
+	public Field findObject(FieldObject object) {
+		Field result = null;
+		for(Field[] row: fields)
+			for(Field field: row)
+				for(FieldObject fieldObject: field.getObjects())
+					if(fieldObject == object) {
+						result = field;
+						break;
+					}
+		return result;
+	}
 		
 	public void PrintSolution(List<Field> solutionPathList) {
 		int moveCounter = 0;

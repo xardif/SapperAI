@@ -66,6 +66,10 @@ public class BombType {
 		this.image = new ImageIcon(BombRecognize.class.getResource(bomb.getPathToTypeImage())).getImage();
 	}
 	
+	 public void setRadius(int radius) {
+		 this.radius = radius;
+	 }
+	 
 	 public int getRadius() {
 		 return radius;
 	 }
@@ -131,7 +135,7 @@ public class BombType {
 		this.field = field;
 	}
 	
-	private int calculateRadius() {
+	public int calculateRadius() {
 		int x = 0;
 		int c = 0;
 		

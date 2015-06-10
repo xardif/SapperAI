@@ -1,7 +1,5 @@
 package pl.edu.amu.wmi.sapper.clones;
 
-import pl.edu.amu.wmi.sapper.ai.decisions.BombPriorityTree;
-import pl.edu.amu.wmi.sapper.map.objects.types.BombSize;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
 import pl.edu.amu.wmi.sapper.map.objects.types.Type;
 
@@ -10,17 +8,8 @@ import java.util.*;
 
 public class Skills {
 
+    public String getskills(Queue<BombType> result){
 
-    public String getskills(){
-        BombPriorityTree tree = BombPriorityTree.buildBombPriorityTree();
-        List<BombType> bombs = new ArrayList<>();
-        bombs.add(new BombType(10, Type.Nuke, BombSize.BIG, 10, true));
-        bombs.add(new BombType(150, Type.C4, BombSize.MEDIUM, 10, true));
-        bombs.add(new BombType(10, Type.FakeBomb, BombSize.BIG, 10, true));
-        bombs.add(new BombType(10, Type.Nuke, BombSize.VERY_BIG, 10, true));
-
-        System.out.println("Bombs: " + bombs.toString());
-        Queue<BombType> result = tree.sortBombsTypesByPriority(bombs);
         List<BombType> list = new ArrayList<>(result);
         System.out.println("Sorted bombs: " + list.toString());
         List<Type> types = new ArrayList<>();
