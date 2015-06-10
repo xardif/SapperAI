@@ -93,6 +93,10 @@ public class BombType {
 		 return isDetonated;
 	 }
 	 
+	public void setType(Type t) {
+		this.type = t;		
+	}
+	 
 	 @Override
 	 public String toString() {
 		return "BombType [radius=" + radius + ", type=" + type + ", size="
@@ -108,7 +112,6 @@ public class BombType {
 	public int getPotentialVictims() {
 		return Calculator.calculateVictims(this);
 	}
-	
 
 	public Image getImage() {
 		return image;
@@ -166,4 +169,5 @@ public class BombType {
 		return (int) ((x/5) * size.getValue() + c );
 		
 	}
+
 }
