@@ -33,7 +33,7 @@ public class Controller {
         final BombRecognize bombRecognize = new BombRecognize();
 
         String name = "bio";
-        String path = "/test_img/" + name + ".jpg";
+        String path = "/img/" + name + ".jpg";
 
         Image img = new ImageIcon(BombRecognize.class.getResource(path)).getImage();
         javafx.scene.image.Image sampledImage = bombRecognize.getSampledData(img);

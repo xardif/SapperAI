@@ -30,6 +30,7 @@ public class BombType {
 		this.isDetonated = false;
 	}
 	
+	@Deprecated
 	public BombType(Type type, BombSize size, int timeToDetonation, boolean isActive, String imagePath) {
 		this.radius = radius;
 		this.type = type;

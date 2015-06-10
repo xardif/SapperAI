@@ -5,10 +5,11 @@
     "type" : "Sapper"
   }, {
     "type" : "Bomb",
-    "mType" : "Nuke",
     "size" : 3,
     "timeToDetonation" : 50,
-    "isActive" : true
+    "isActive" : true,
+    "pathToTypeImage" : "/img/c4.jpg"
+
   }, {
     "type" : "Blockade"
   }, {
@@ -16,10 +17,10 @@
     "number" : 500
   }, {
     "type" : "Bomb",
-    "mType" : "Nuke",
     "size" : 3,
     "timeToDetonation" : 50,
-    "isActive" : true
+    "isActive" : true,
+    "pathToTypeImage" : "/img/chemical.jpg"
   }, {
     "type" : "Empty"
   }, {

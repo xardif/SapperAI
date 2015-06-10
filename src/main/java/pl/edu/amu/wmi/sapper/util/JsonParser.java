@@ -7,7 +7,6 @@ import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombSize;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
-import pl.edu.amu.wmi.sapper.map.objects.types.Type;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -35,8 +34,10 @@ public class JsonParser {
                     map.setField(i,j,fo);
                     if(fo instanceof Bomb){
                         Bomb bomb = (Bomb)fo;
-                        BombType bombType = new BombType(bomb.getSize()*2, Type.valueOf(bomb.getmType()),
-                                BombSize.valueOf(bomb.getSize()), bomb.getTimeToDetonation(), bomb.isActive());
+                        BombType bombType = new BombType(bomb.getSize()*2,
+                                BombSize.valueOf(bomb.getSize()),
+                                bomb.getTimeToDetonation(),
+                                bomb.isActive());
                         bombType.setField(map.getField(i,j));
                     }
                 } catch (IOException e) {
