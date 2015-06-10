@@ -109,8 +109,9 @@ public class Controller {
                 final int x = i, y = j;
                 map.getField(i, j).getObjects().forEach(fo -> {
                     String fileName = fo.toString().toLowerCase();
-                    if (!fileName.equals("Empty")) {
+                    if (!fileName.equals("empty")) {
                         String path = "/brick_img/" + fileName + ".png";
+                        System.out.println(path);
                         javafx.scene.image.Image img = new javafx.scene.image.Image(getClass().getResourceAsStream(path));
                         ImageView iv = new ImageView(img);
                         iv.fitWidthProperty().bind(brickWidth);
@@ -121,7 +122,7 @@ public class Controller {
                         }
 
                         if(fo instanceof Civilians){
-                            sapperView = iv;
+                            //sapperView = iv;
                         }
 
                         brickWidth.addListener((observable, oldValue, newValue) -> {
