@@ -16,7 +16,7 @@ public class NeuralNetworkTest {
         String[] bombNames = new String[]{"bio", "c4", "chemical"};
 
         for(String name : bombNames) {
-            String path = "/test_img/" + name + ".jpg";
+            String path = "/img/" + name + ".jpg";
 
             Image img = new ImageIcon(BombRecognize.class.getResource(path)).getImage();
 
@@ -32,7 +32,7 @@ public class NeuralNetworkTest {
         System.out.println("\n\nTest all bombs:");
 
         for(String name : BombRecognize.getBombNames()) {
-            String path = "/img/" + name + ".jpg";
+            String path = "/ideal_images/" + name + ".jpg";
 
             Image img = new ImageIcon(BombRecognize.class.getResource(path)).getImage();
 
@@ -48,7 +48,7 @@ public class NeuralNetworkTest {
         System.out.println("\n\nTest one bomb:");
 
         String name = "nuke";
-        String path = "/img/" + name + ".jpg";
+        String path = "/ideal_images/" + name + ".jpg";
 
         Image img = new ImageIcon(BombRecognize.class.getResource(path)).getImage();
 

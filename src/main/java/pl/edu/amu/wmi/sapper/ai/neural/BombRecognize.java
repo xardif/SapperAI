@@ -1,6 +1,5 @@
 package pl.edu.amu.wmi.sapper.ai.neural;
 
-import javafx.scene.image.*;
 import org.encog.engine.network.activation.*;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
@@ -18,7 +17,6 @@ import org.encog.util.downsample.RGBDownsample;
 import pl.edu.amu.wmi.sapper.ui.ImageUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.Image;
 import java.util.Arrays;
 import java.util.TreeMap;
@@ -106,7 +104,7 @@ public class BombRecognize {
 
     private void loadResources() {
         for(String bombName : bombNames){
-            String path = "/img/" + bombName + ".jpg";
+            String path = "/ideal_images/" + bombName + ".jpg";
 
             Image imageIcon = new ImageIcon(getClass().getResource(path)).getImage();
             bombImages.put(bombName, imageIcon);
