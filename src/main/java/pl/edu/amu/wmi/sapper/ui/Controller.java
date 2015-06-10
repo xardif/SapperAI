@@ -8,12 +8,17 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.*;
@@ -23,6 +28,7 @@ import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Controller {
 
@@ -111,7 +117,6 @@ public class Controller {
                     String fileName = fo.toString().toLowerCase();
                     if (!fileName.equals("empty")) {
                         String path = "/brick_img/" + fileName + ".png";
-                        System.out.println(path);
                         javafx.scene.image.Image img = new javafx.scene.image.Image(getClass().getResourceAsStream(path));
                         ImageView iv = new ImageView(img);
                         iv.fitWidthProperty().bind(brickWidth);
@@ -121,19 +126,40 @@ public class Controller {
                             sapperView = iv;
                         }
 
-                        if(fo instanceof Civilians){
-                            //sapperView = iv;
-                        }
-
-                        brickWidth.addListener((observable, oldValue, newValue) -> {
+                        /*brickWidth.addListener((observable, oldValue, newValue) -> {
                             AnchorPane.setLeftAnchor(iv, y * brickWidth.doubleValue());
                         });
 
                         brickHeight.addListener((observable, oldValue, newValue) -> {
                             AnchorPane.setTopAnchor(iv, x * brickHeight.doubleValue());
+                        });*/
+
+                        StackPane sp = new StackPane();
+
+                        brickWidth.addListener((observable, oldValue, newValue) -> {
+                            //AnchorPane.setLeftAnchor(countLabel, y * brickWidth.doubleValue());
+                            sp.resizeRelocate(y * brickWidth.doubleValue(), sp.getLayoutY(),
+                                    brickWidth.doubleValue(), brickHeight.doubleValue());
                         });
 
-                        anchorPane.getChildren().add(iv);
+                        brickHeight.addListener((observable, oldValue, newValue) -> {
+                            //AnchorPane.setTopAnchor(countLabel, x * brickHeight.doubleValue());
+                            sp.resizeRelocate(sp.getLayoutX(), x * brickHeight.doubleValue(),
+                                    brickWidth.doubleValue(), brickHeight.doubleValue());
+                        });
+
+                        sp.getChildren().add(iv);
+
+                        if(fo instanceof Civilians){
+                            Label countLabel = new Label(String.valueOf(((Civilians)fo).getNumber()));
+                            countLabel.setStyle("-fx-text-fill: white");
+                            countLabel.setTextAlignment(TextAlignment.CENTER);
+                            countLabel.setAlignment(Pos.CENTER);
+                            StackPane.setAlignment(countLabel, Pos.CENTER);
+                            sp.getChildren().add(countLabel);
+                        }
+
+                        anchorPane.getChildren().add(sp);
                     }
                 });
                 //gc.fillRect(j * brickWidth.doubleValue(), i * brickHeight.doubleValue(),
