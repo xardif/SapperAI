@@ -10,11 +10,11 @@ public class Bomb extends FieldObject {
 	public Bomb() {
     }
 
-    public Bomb(int size, int timeToDetonation, boolean isActive, String path) {
+    public Bomb(int size, int timeToDetonation, boolean isActive, String pathToTypeImage) {
         this.size = size;
         this.timeToDetonation = timeToDetonation;
         this.isActive = isActive;
-        this.pathToTypeImage = path;
+        this.pathToTypeImage = pathToTypeImage;
     }
 
     public int getSize() {

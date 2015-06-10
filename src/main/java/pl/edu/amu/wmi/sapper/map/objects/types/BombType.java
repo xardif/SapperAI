@@ -17,7 +17,8 @@ public class BombType {
 	private boolean isDetonated;
 	private Image image;
 	private Field field;
-	
+
+	@Deprecated
 	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive) {
 		this.radius = radius;
 		this.type = type;
@@ -26,10 +27,28 @@ public class BombType {
 		this.isActive = isActive;
 		this.isDetonated = false;
 	}
-	
+
+	@Deprecated
 	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive, String imagePath) {
 		this.radius = radius;
 		this.type = type;
+		this.size = size;
+		this.timeToDetonation = timeToDetonation;
+		this.isActive = isActive;
+		this.isDetonated = false;
+		this.image = new ImageIcon(BombRecognize.class.getResource(imagePath)).getImage();
+	}
+
+	public BombType(int radius, BombSize size, int timeToDetonation, boolean isActive) {
+		this.radius = radius;
+		this.size = size;
+		this.timeToDetonation = timeToDetonation;
+		this.isActive = isActive;
+		this.isDetonated = false;
+	}
+
+	public BombType(int radius, BombSize size, int timeToDetonation, boolean isActive, String imagePath) {
+		this.radius = radius;
 		this.size = size;
 		this.timeToDetonation = timeToDetonation;
 		this.isActive = isActive;

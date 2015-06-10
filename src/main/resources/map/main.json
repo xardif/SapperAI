@@ -8,7 +8,7 @@
     "size" : 3,
     "timeToDetonation" : 50,
     "isActive" : true,
-    "path" : "/img/c4.jpg"
+    "pathToTypeImage" : "/img/c4.jpg"
 
   }, {
     "type" : "Blockade"
@@ -20,7 +20,7 @@
     "size" : 3,
     "timeToDetonation" : 50,
     "isActive" : true,
-    "path" : "/img/chemical.jpg"
+    "pathToTypeImage" : "/img/chemical.jpg"
   }, {
     "type" : "Empty"
   }, {
