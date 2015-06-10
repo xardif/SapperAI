@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DetonationTime {
-    public Map<Type, Integer>  getTime(String solution){
+    public Map<Type, Integer> getTime(String solution){
         Map<Type, Integer> bomby= new HashMap<Type, Integer>();
-        String skills = solution.toString();
+        String skills = solution;
         String part[] = new String[7];
         part[0]=skills.substring(0,2);
         part[1]=skills.substring(2,4);
