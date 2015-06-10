@@ -85,7 +85,7 @@ public class Main {
         // Evolve our population until we reach an optimum solution
         int generationCount = 0;
         int limit = 3;
-        while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness() && generationCount < 3) {
+        while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness() && generationCount < limit) {
             generationCount++;
             System.out.println("Generation: " + generationCount + " Fittest: " + myPop.getFittest().getFitness());
             myPop = Algorithm.evolvePopulation(myPop);
