@@ -1,19 +1,23 @@
 package pl.edu.amu.wmi.sapper.ai;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
+import pl.edu.amu.wmi.sapper.map.objects.types.Type;
 
 public class SapperLogic {
 	private Field field;
 	private int turnPosition;	//0-N, 1-NE, 2-E, 3-SE, 4-S, 5-SW, 6-W, 7-NW
+	private java.util.Map<Type, Integer> skills;
 	
 	public SapperLogic(Field field) {
 		setField(field);
+		skills = new HashMap<>();
 		this.turnPosition = 2;	//zak�adamy, �e po starcie programu saper jest zwr�cony do g�ry
 	}
 	
@@ -32,86 +36,13 @@ public class SapperLogic {
 		this.turnPosition = (this.turnPosition - 1)%8;
 	}
 	
-	public int movesCount(Field to) {
-		int xDiff = this.field.getXPosition() - to.getXPosition();	//je�eli minus to w d�
-		int yDiff = this.field.getYPosition() - to.getYPosition();	//je�eli minus to w prawo
-		
-		//idzie w gore
-		if(xDiff == 1 && yDiff == 0) {
-			if(turnPosition == 0)	//jest zwrocony w gore
-				return  0;
-			else {	//obrot
-				this.turnPosition = 0;
-				return 1;
-			}
-		}
-		//idzie w gora prawo
-		if(xDiff == 1 && yDiff == -1) {
-			if(turnPosition == 1)	//jest zwrocony w gora prawo
-				return  0;
-			else {	//obrot
-				this.turnPosition = 1;
-				return 1;
-			}
-		}
-		//idzie w prawo
-		if(xDiff == 0 && yDiff == -1) {
-			if(turnPosition == 2)	//jest zwrocony w prawo
-				return  0;
-			else {	//obrot
-				this.turnPosition = 2;
-				return 1;
-			}
-		}
-		//idzie w dol prawo
-		if(xDiff == -1 && yDiff == -1) {
-			if(turnPosition == 3)	//jest zwrocony w dol prawo
-				return  0;
-			else {	//obrot
-				this.turnPosition = 3;
-				return 1;
-			}
-		}
-		//idzie w dol
-		if(xDiff == -1 && yDiff == 0) {
-			if(turnPosition == 4)	//jest zwrocony w dol
-				return  0;
-			else {	//obrot
-				this.turnPosition = 4;
-				return 1;
-			}
-		}
-		//idzie w dol lewo
-		if(xDiff == -1 && yDiff == 1) {
-			if(turnPosition == 5)	//jest zwrocony w dol lewo
-				return  0;
-			else {	//obrot
-				this.turnPosition = 5;
-				return 1;
-			}
-		}		
-		//idzie w lewo
-		if(xDiff == 0 && yDiff == 1) {
-			if(turnPosition == 6)	//jest zwrocony w lewo
-				return  0;
-			else {	//obrot
-				this.turnPosition = 6;
-				return 1;
-			}
-		}
-
-		//idzie w gora lewo
-		if(xDiff == 1 && yDiff == 1) {
-			if(turnPosition == 7)	//jest zwrocony w gora lewo
-				return  0;
-			else {	//obrot
-				this.turnPosition = 7;
-				return 1;
-			}
-		}	
-		return 0;
+	public java.util.Map<Type, Integer> getSkills() {
+		return skills;
 	}
-	
+
+	public void setSkills(java.util.Map<Type, Integer> skills) {
+		this.skills = skills;
+	}
 	
 	public void defuseBomb(BombType bomb) {
 		bomb.setIsActive();
@@ -204,8 +135,13 @@ public class SapperLogic {
         
         
         //wypisanie rozwiazania
-        map.PrintSolution(SolutionPathList);
-        System.out.println("Koszt przej�cia (w sekundach): " + pathCost);
+        for(Field f: SolutionPathList) {
+        	map.PrintSolution(SolutionPathList);
+	        //System.out.println("PathCost " + pathCost);
+	        System.out.println();
+	        System.out.println();
+	        map.moveSapper(this, f);
+        }
         
         return SolutionPathList;
 	}

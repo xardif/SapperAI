@@ -30,9 +30,9 @@ public class BombRecognize {
     private final Downsample downsample = new RGBDownsample();
 
     private static final String[] bombNames = new String[] {
-            "bio", "c4", "chemical",
-            "dirty", "dynamite", "fake",
-            "homemade", "nuke" };
+            "C4", "ChemicalBomb",
+            "DirtyBomb", "Dynamite", "FakeBomb",
+            "HomeMadeBomb", "Nuke" };
 
     public BombRecognize() {
         this(0.7f, 0.3f);

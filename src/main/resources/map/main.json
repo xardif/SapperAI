@@ -1,33 +1,9 @@
 {
-  "rows" : 3,
-  "cols" : 3,
-  "map" : [{
-    "type" : "Sapper"
-  }, {
-    "type" : "Bomb",
-    "size" : 3,
-    "timeToDetonation" : 50,
-    "isActive" : true,
-    "pathToTypeImage" : "/img/c4.jpg"
-
-  }, {
-    "type" : "Blockade"
-  }, {
-    "type" : "Civilians",
-    "number" : 500
-  }, {
-    "type" : "Bomb",
-    "size" : 3,
-    "timeToDetonation" : 50,
-    "isActive" : true,
-    "pathToTypeImage" : "/img/chemical.jpg"
-  }, {
-    "type" : "Empty"
-  }, {
-    "type" : "Empty"
-  }, {
-    "type" : "Empty"
-  }, {
-    "type" : "Empty"
-  }]
+  "rows" : 4,
+  "cols" : 4,
+  "map" : [ {"type" : "Sapper"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Civilians","number" : 500}, 
+  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, 
+  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Bomb","size" : 3,"timeToDetonation" : 50,"isActive" : true,"pathToTypeImage" : "/img/chemical.jpg"}, 
+  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Bomb","size" : 5,"timeToDetonation" : 50,"isActive" : true,"pathToTypeImage" : "/img/c4.jpg"}
+  		]
 }

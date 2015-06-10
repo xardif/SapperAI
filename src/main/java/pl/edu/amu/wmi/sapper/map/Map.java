@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import pl.edu.amu.wmi.sapper.ai.SapperLogic;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.Civilians;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
+import pl.edu.amu.wmi.sapper.map.objects.Empty;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
 
@@ -67,7 +69,19 @@ public class Map {
 		}
 		return result;		
 	}
-		
+	
+	public Field findObject(FieldObject object) {
+		Field result = null;
+		for(Field[] row: fields)
+			for(Field field: row)
+				for(FieldObject fieldObject: field.getObjects())
+					if(fieldObject == object) {
+						result = field;
+						break;
+					}
+		return result;
+	}
+	
 	public void PrintSolution(List<Field> solutionPathList) {
 		int moveCounter = 0;
 		
@@ -83,42 +97,105 @@ public class Map {
 					}
 				}
 				if(solutionNode) {
-					if (getField(i,j).getObjects().isEmpty())
-						System.out.print("o "); //solution path
-					else if (getField(i,j).getObjects().get(0) instanceof Sapper)
-						System.out.print("S ");	//sapper
-					else if (getField(i,j).getObjects().get(0) instanceof Bomb)
-						System.out.print("! ");	//bomb
-					else if(getField(i,j).getObjects().get(0) instanceof Civilians)
-						System.out.print("o%"); //civillians
+					String toPrint = "";
+					for(FieldObject object: getField(i,j).getObjects()) {
+						
+						if (object instanceof Sapper)
+							toPrint += "S";	//sapper
+						
+						if (object instanceof Bomb)
+							toPrint += "!";	//bomb
+						
+						if(object instanceof Civilians)
+							toPrint += "%"; //civillians
+						
+						if(object instanceof Empty && toPrint.isEmpty()) 
+							toPrint += "o"; //solution path
+
+						if(toPrint.length() < 2) toPrint += " ";
+						
+					}
+					System.out.print(toPrint);
 					moveCounter++;
+					
+				} else {
+				
+					String toPrint = "nie jestem kurwa solution";
+					for(FieldObject object: getField(i,j).getObjects()) {
+									
+						if(object instanceof Blockade)
+							toPrint += "#"; //blockade
+						
+						if(object instanceof Civilians)
+							toPrint += "%"; //civillians
+						
+						if (object instanceof Empty && toPrint.isEmpty())
+							toPrint += ".";	//road
+						
+					}
+					
+					if(toPrint.length() < 2) toPrint += " ";
+					System.out.print(toPrint);
+					
 				}
-				else if (getField(i,j).getObjects().isEmpty())
-					System.out.print(". ");	//road
-				else if(getField(i,j).getObjects().get(0) instanceof Blockade)
-					System.out.print("# "); //blockade
-				else if(getField(i,j).getObjects().get(0) instanceof Civilians)
-					System.out.print("% "); //civillians
+				
 			}
 			System.out.println("");
 		}
-		System.out.println("Liczba krokow: " + moveCounter);
+		//System.out.println("Liczba krokow: " + moveCounter);
+	}
+	
+	public void moveSapper(SapperLogic sapper, Field to) {
+		List<FieldObject> fieldObjects = sapper.getField().getObjects();
+		
+		FieldObject sapperField = null;
+		List<FieldObject> newFieldObjects = new ArrayList<>();
+		for(FieldObject object: fieldObjects) {
+			if( !(object instanceof Sapper) ) {
+				newFieldObjects.add(object);
+			} else {
+				sapperField = object;
+			}
+		}
+		
+		fieldObjects.clear();
+		fieldObjects.addAll(newFieldObjects);
+		if(fieldObjects.isEmpty()) fieldObjects.add(new Empty());
+		
+		to.getObjects().add(sapperField);
+		
+		sapper.setField(to);
 	}
 	
 	public static Map buildRandomMap() {
-		Map map = new Map(18,18);
+		Map map = new Map(18, 18);
 		
 		map.setField(0, 0, new Sapper());
 		
 		Random random = new Random();
+		 
 		for(int x = 0; x < map.getRows(); x++)
 			for(int y = 1; y < map.getCols(); y++) {
 						
 				int decision = random.nextInt(10);
 				
 				switch(decision) {
+				// Blokada 20%
+				case 0: case 1: 
+					map.setField(x, y, new Blockade());
 				
-				
+					break;
+					
+				// Bomba 10%
+				case 2:
+					map.setField(x, y, new Bomb()); 
+					
+					break;
+					
+				// Cywile 30%	
+				case 3: case 4: case 5:
+					
+					break;
 				
 				}
 				
@@ -126,8 +203,6 @@ public class Map {
 		
 		return map;
 	}
-
-
 
     @Override
     public String toString() {
