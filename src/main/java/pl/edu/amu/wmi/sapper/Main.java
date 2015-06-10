@@ -20,6 +20,7 @@ import pl.edu.amu.wmi.sapper.clones.DetonationTime;
 import pl.edu.amu.wmi.sapper.clones.FitnessCalc;
 import pl.edu.amu.wmi.sapper.clones.Population;
 import pl.edu.amu.wmi.sapper.clones.Skills;
+import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
@@ -60,6 +61,11 @@ public class Main {
 		}
 	    
 	    List<Bomb> bombs = map.getAllBombs();
+	    System.out.println("All bombs: ");
+	    for(Bomb bomb: bombs)
+	    	System.out.print(bomb.toString() + " ");
+	    System.out.println();
+	    
 	    BombRecognize recognizer = new BombRecognize();
 	    List<BombType> bombTypes = new ArrayList<>();
 	    Calculator.setMap(map);
@@ -111,8 +117,14 @@ public class Main {
 		
 		logic.setSkills(skillsMap);
 		
+		Field start = logic.getField();
+		
 		for(BombType bombType: sortedBombTypes) {
 			BombPriority priority = tree.getBombPriority(bombType);
+			
+			List<Field> path = logic.findPath(start, bombType.getField(), map);
+			start = bombType.getField();
+			
 		}
 		
 	}

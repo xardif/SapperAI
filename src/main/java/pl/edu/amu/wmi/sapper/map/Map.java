@@ -8,6 +8,7 @@ import java.util.Random;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.Civilians;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
+import pl.edu.amu.wmi.sapper.map.objects.Empty;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
 
@@ -95,7 +96,7 @@ public class Map {
 					}
 				}
 				if(solutionNode) {
-					if (getField(i,j).getObjects().isEmpty())
+					if (getField(i,j).getObjects().get(0) instanceof Empty)
 						System.out.print("o "); //solution path
 					else if (getField(i,j).getObjects().get(0) instanceof Sapper)
 						System.out.print("S ");	//sapper
@@ -105,7 +106,7 @@ public class Map {
 						System.out.print("o%"); //civillians
 					moveCounter++;
 				}
-				else if (getField(i,j).getObjects().isEmpty())
+				else if (getField(i,j).getObjects().get(0) instanceof Empty)
 					System.out.print(". ");	//road
 				else if(getField(i,j).getObjects().get(0) instanceof Blockade)
 					System.out.print("# "); //blockade
