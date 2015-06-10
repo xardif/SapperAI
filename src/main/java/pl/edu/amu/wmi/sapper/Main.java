@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -84,7 +85,8 @@ public class Main {
         
         // Evolve our population until we reach an optimum solution
         int generationCount = 0;
-        int limit = 3;
+        Random rand = new Random();
+        int limit = rand.nextInt(3) + 1;
         while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness() && generationCount < limit) {
             generationCount++;
             System.out.println("Generation: " + generationCount + " Fittest: " + myPop.getFittest().getFitness());
