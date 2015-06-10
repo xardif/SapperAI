@@ -12,8 +12,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import pl.edu.amu.wmi.sapper.ai.SapperLogic;
 import pl.edu.amu.wmi.sapper.ai.decisions.BombPriorityTree;
+import pl.edu.amu.wmi.sapper.ai.decisions.bomb.BombPriority;
 import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
+import pl.edu.amu.wmi.sapper.clones.Algorithm;
 import pl.edu.amu.wmi.sapper.clones.DetonationTime;
+import pl.edu.amu.wmi.sapper.clones.FitnessCalc;
+import pl.edu.amu.wmi.sapper.clones.Population;
 import pl.edu.amu.wmi.sapper.clones.Skills;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
@@ -71,14 +75,31 @@ public class Main {
 		Queue<BombType> sortedBombTypes = tree.sortBombsTypesByPriority(bombTypes);
 		Skills skills = new Skills();
 		
-		String sapperSkills = skills.getskills(sortedBombTypes);
+		String targetSkills = skills.getskills(sortedBombTypes);
+		System.out.println("!!!!!! Pre Target Skills: " + targetSkills);
+		FitnessCalc.setSolution(targetSkills);
 		
-		System.out.println("!!!!!! Skills: " + sapperSkills);
+		/* Create an initial population */
+        Population myPop = new Population(50, true);
+        
+        // Evolve our population until we reach an optimum solution
+        int generationCount = 0;
+        int limit = 3;
+        while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness() && generationCount < 3) {
+            generationCount++;
+            System.out.println("Generation: " + generationCount + " Fittest: " + myPop.getFittest().getFitness());
+            myPop = Algorithm.evolvePopulation(myPop);
+        }
+		
+		String actualSkills = myPop.getFittest().toString();
+		
+		System.out.println("!!!!!! Target Skills: " + targetSkills);
+		System.out.println("!!!!!! Actual Skills: " + actualSkills);
 		
 		SapperLogic logic = new SapperLogic(map.getField(0, 0));
 				
 		DetonationTime detonation = new DetonationTime();
-		java.util.Map<Type, Integer> skillsMap = detonation.getTime(sapperSkills);
+		java.util.Map<Type, Integer> skillsMap = detonation.getTime(actualSkills);
 		
 		if(skillsMap.isEmpty()) System.out.println("EMPTY");
 		
@@ -87,6 +108,10 @@ public class Main {
 		}
 		
 		logic.setSkills(skillsMap);
+		
+		for(BombType bombType: sortedBombTypes) {
+			BombPriority priority = tree.getBombPriority(bombType);
+		}
 		
 	}
 
