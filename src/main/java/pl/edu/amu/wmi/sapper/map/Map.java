@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import pl.edu.amu.wmi.sapper.ai.SapperLogic;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.Civilians;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
@@ -115,7 +116,29 @@ public class Map {
 			}
 			System.out.println("");
 		}
-		System.out.println("Liczba krokow: " + moveCounter);
+		
+		//System.out.println("Liczba krokow: " + moveCounter);
+	}
+	
+	public void moveSapper(SapperLogic sapper, Field to) {
+		List<FieldObject> fieldObjects = sapper.getField().getObjects();
+		
+		FieldObject sapperField = null;
+		List<FieldObject> newFieldObjects = new ArrayList<>();
+		for(FieldObject object: fieldObjects) {
+			if( !(object instanceof Sapper) ) {
+				newFieldObjects.add(object);
+			} else {
+				sapperField = object;
+			}
+		}
+		
+		fieldObjects.clear();
+		fieldObjects.addAll(newFieldObjects);
+		
+		to.getObjects().add(sapperField);
+		
+		sapper.setField(to);
 	}
 	
 	public static Map buildRandomMap() {
