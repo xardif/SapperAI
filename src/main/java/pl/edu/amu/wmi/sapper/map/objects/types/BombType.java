@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 
 import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
 import pl.edu.amu.wmi.sapper.map.Field;
+import pl.edu.amu.wmi.sapper.map.objects.Bomb;
+import pl.edu.amu.wmi.sapper.util.Calculator;
 
 public class BombType {
 	
@@ -18,6 +20,7 @@ public class BombType {
 	private Image image;
 	private Field field;
 	
+	@Deprecated
 	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive) {
 		this.radius = radius;
 		this.type = type;
@@ -27,7 +30,7 @@ public class BombType {
 		this.isDetonated = false;
 	}
 	
-	public BombType(int radius, Type type, BombSize size, int timeToDetonation, boolean isActive, String imagePath) {
+	public BombType(Type type, BombSize size, int timeToDetonation, boolean isActive, String imagePath) {
 		this.radius = radius;
 		this.type = type;
 		this.size = size;
@@ -35,6 +38,14 @@ public class BombType {
 		this.isActive = isActive;
 		this.isDetonated = false;
 		this.image = new ImageIcon(BombRecognize.class.getResource(imagePath)).getImage();
+	}
+	
+	public BombType(Bomb bomb) {
+		this.size = BombSize.valueOf(bomb.getSize());
+		this.timeToDetonation = bomb.getTimeToDetonation();
+		this.isActive = bomb.isActive();
+		this.isDetonated = false;
+		this.image = new ImageIcon(BombRecognize.class.getResource(bomb.getPathToTypeImage())).getImage();
 	}
 	
 	 public int getRadius() {
@@ -77,8 +88,7 @@ public class BombType {
 	 }
 
 	public int getPotentialVictims() {
-		// TODO Auto-generated method stub
-		return size.getValue() * radius;
+		return Calculator.calculateVictims(this);
 	}
 	
 
@@ -99,4 +109,45 @@ public class BombType {
 	public void setField(Field field) {
 		this.field = field;
 	}
+	
+	private int calculateRadius() {
+		int x = 0;
+		int c = 0;
+		
+		switch(type) {
+		case C4:
+			x = 3;
+			c = 2;
+			break;
+		case ChemicalBomb:
+			x = 3;
+			c = 3;
+			break;
+		case DirtyBomb:
+			x = 4;
+			c = 3;
+			break;
+		case Dynamite:
+			x = 3;
+			c = 1;
+			break;
+		case FakeBomb:
+			x = 0;
+			c = 0;
+			break;
+		case HomeMadeBomb:
+			x = 1;
+			c = 1;
+			break;
+		case Nuke:
+			x = 5;
+			c = 3;
+			break;
+		}
+
+		return (int) ((x/5) * size.getValue() + c );
+		
+	}
+	
+	
 }
