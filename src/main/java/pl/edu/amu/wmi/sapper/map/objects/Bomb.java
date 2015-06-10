@@ -6,15 +6,17 @@ public class Bomb extends FieldObject {
     private int size;
     private int timeToDetonation;
     private boolean isActive;
+    private String pathToTypeImage;
 
-    public Bomb() {
+	public Bomb() {
     }
 
-    public Bomb(String mType, int size, int timeToDetonation, boolean isActive) {
+    public Bomb(String mType, int size, int timeToDetonation, boolean isActive, String path) {
         this.mType = mType;
         this.size = size;
         this.timeToDetonation = timeToDetonation;
         this.isActive = isActive;
+        this.pathToTypeImage = path;
     }
 
     public String getmType() {
@@ -53,4 +55,14 @@ public class Bomb extends FieldObject {
     public String toString() {
         return "Bomb";
     }
+    
+
+    public String getPathToTypeImage() {
+		return pathToTypeImage;
+	}
+
+	public void setPathToTypeImage(String pathToTypeImage) {
+		this.pathToTypeImage = pathToTypeImage;
+	}
+
 }
