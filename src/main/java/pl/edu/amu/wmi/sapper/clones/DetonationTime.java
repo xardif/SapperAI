@@ -28,7 +28,7 @@ public class DetonationTime {
 
         if(part[1].equals("01"))
             bomby.put(Type.C4, 10);
-        else if(part[1].equals("01"))
+        else if(part[1].equals("10"))
             bomby.put(Type.C4, 7);
         else if(part[1].equals("11"))
             bomby.put(Type.C4, 4);

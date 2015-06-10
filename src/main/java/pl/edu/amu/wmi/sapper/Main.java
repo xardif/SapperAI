@@ -86,6 +86,8 @@ public class Main {
 			System.out.println( type.toString() + " -> " + skillsMap.get(type).toString());
 		}
 		
+		logic.setSkills(skillsMap);
+		
 	}
 
 }
