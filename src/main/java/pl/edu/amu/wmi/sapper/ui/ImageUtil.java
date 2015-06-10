@@ -3,6 +3,10 @@ package pl.edu.amu.wmi.sapper.ui;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.*;
+import org.encog.util.ImageSize;
+import org.encog.util.downsample.Downsample;
+import org.encog.util.downsample.RGBDownsample;
+import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
 
 import java.awt.*;
 import java.awt.Image;
@@ -52,6 +56,13 @@ public class ImageUtil {
                 new WritableImage(image.getWidth(null), image.getHeight(null)));
 
         return fxImage;
+    }
+
+    public static javafx.scene.image.Image getSampledData(Image image){
+        final Downsample downsample = new RGBDownsample();
+        double[] inputData = downsample.downSample(image, BombRecognize.DOWNSAMPLE_WIDTH, BombRecognize.DOWNSAMPLE_HEIGHT);
+        ImageSize is = new ImageSize(image);
+        return ImageUtil.createImage(inputData, BombRecognize.DOWNSAMPLE_WIDTH, BombRecognize.DOWNSAMPLE_HEIGHT, is.getWidth(), is.getHeight());
     }
 
 }

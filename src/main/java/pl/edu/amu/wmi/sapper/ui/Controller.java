@@ -1,17 +1,28 @@
 package pl.edu.amu.wmi.sapper.ui;
 
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
-import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
+import javafx.util.Duration;
+import pl.edu.amu.wmi.sapper.map.Map;
+import pl.edu.amu.wmi.sapper.map.objects.*;
+import pl.edu.amu.wmi.sapper.util.JsonParser;
 
+import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.Image;
+import java.io.IOException;
 
 public class Controller {
 
@@ -19,78 +30,136 @@ public class Controller {
     public Pane mainPane;
 
     @FXML
-    private Label lab1, lab2;
+    public AnchorPane anchorPane;
 
-    Canvas backgroundCanvas, foregroundCanvas;
+    @FXML
+    private Canvas backgroundCanvas;
 
+    private Map map;
+
+    public static final double W = 200; // canvas dimensions.
+    public static final double H = 200;
+    public static final double D = 20;  // diameter.
+
+
+    private final DoubleProperty brickWidth = new SimpleDoubleProperty();
+    private final DoubleProperty brickHeight = new SimpleDoubleProperty();
+
+    @FXML
+    @PostConstruct
     public void initialize(){
-        backgroundCanvas = new Canvas(600,500);
-        foregroundCanvas = new Canvas(600,500);
+        backgroundCanvas.heightProperty().bind(mainPane.heightProperty());
+        backgroundCanvas.widthProperty().bind(mainPane.widthProperty());
 
-        mainPane.getChildren().addAll(backgroundCanvas, foregroundCanvas);
+        try {
+            map = JsonParser.parse("/map/main.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            brickWidth.bind(mainPane.widthProperty().divide(map.getCols()));
+            brickHeight.bind(mainPane.heightProperty().divide(map.getRows()));
+        }
 
 
-        final BombRecognize bombRecognize = new BombRecognize();
+
+        mainPane.widthProperty().addListener(observable -> {
+            redrawBackground();
+        });
+        mainPane.heightProperty().addListener(observable -> {
+            redrawBackground();
+        });
+
+        initPane();
+
 
         String name = "bio";
         String path = "/img/" + name + ".jpg";
+        Image img = new ImageIcon(getClass().getResource(path)).getImage();
+        javafx.scene.image.Image sampledImage = ImageUtil.getSampledData(img);
 
-        Image img = new ImageIcon(BombRecognize.class.getResource(path)).getImage();
-        javafx.scene.image.Image sampledImage = bombRecognize.getSampledData(img);
+        //foregroundCanvas.getGraphicsContext2D().drawImage(sampledImage, 0, 0);
+        //foregroundCanvas.getGraphicsContext2D().drawImage(ImageUtil.getFXImage(img), 0, 100);
 
-
-        foregroundCanvas.getGraphicsContext2D().drawImage(sampledImage, 0, 0);
-        foregroundCanvas.getGraphicsContext2D().drawImage(ImageUtil.getFXImage(img), 0, 100);
 
         /*
-
-        backgroundCanvas.getGraphicsContext2D().fillText("asdasd", 20, 20);
+        backgroundStackPane.getGraphicsContext2D().fillText("asdasd", 20, 20);
         foregroundCanvas.getGraphicsContext2D().setFill(Color.BLUE);
         foregroundCanvas.getGraphicsContext2D().fillText("asdasd", 23, 24);
         */
     }
 
-    private void drawShapes(GraphicsContext gc) {
-        gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
-        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
-        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
-        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
-        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
-        gc.fillPolygon(new double[]{10, 40, 10, 40},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolygon(new double[]{60, 90, 60, 90},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolyline(new double[]{110, 140, 110, 140},
-                new double[]{210, 210, 240, 240}, 4);
+    private void redrawBackground(){
+        GraphicsContext gc = backgroundCanvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, mainPane.getWidth(), mainPane.getHeight());
+        for(int i = 0; i < map.getRows(); i++) {
+            for (int j = 0; j < map.getCols(); j++) {
+                gc.setFill(Color.WHITE);
+                gc.fillRect(j * brickWidth.doubleValue(), i * brickHeight.doubleValue(),
+                        brickWidth.doubleValue() - 1, brickHeight.doubleValue() - 1);
+            }
+        }
     }
 
-    int i = 0;
-    private void drawShapes2(GraphicsContext gc) {
-        gc.clearRect(0, 0, 600, 500);
-        gc.setFill(Color.AZURE);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
+    private ImageView sapperView;
 
-        gc.strokePolygon(new double[]{160 + i, 190 + i, 60, 90},
-                new double[]{210 + i, 210 + i, 240, 240}, 4);
-        gc.strokePolyline(new double[]{210, 240, 110, 140},
-                new double[]{210, 210, 240, 240}, 4);
-        i+=20;
+    private void initPane() {
+        for(int i = 0; i < map.getRows(); i++){
+            for(int j = 0; j < map.getCols(); j++){
+                final int x = i, y = j;
+                map.getField(i, j).getObjects().forEach(fo -> {
+                    String fileName = fo.toString().toLowerCase();
+                    if (!fileName.equals("Empty")) {
+                        String path = "/brick_img/" + fileName + ".png";
+                        javafx.scene.image.Image img = new javafx.scene.image.Image(getClass().getResourceAsStream(path));
+                        ImageView iv = new ImageView(img);
+                        iv.fitWidthProperty().bind(brickWidth);
+                        iv.fitHeightProperty().bind(brickHeight);
+
+                        if(fo instanceof Sapper){
+                            sapperView = iv;
+                        }
+
+                        if(fo instanceof Civilians){
+                            sapperView = iv;
+                        }
+
+                        brickWidth.addListener((observable, oldValue, newValue) -> {
+                            AnchorPane.setLeftAnchor(iv, y * brickWidth.doubleValue());
+                        });
+
+                        brickHeight.addListener((observable, oldValue, newValue) -> {
+                            AnchorPane.setTopAnchor(iv, x * brickHeight.doubleValue());
+                        });
+
+                        anchorPane.getChildren().add(iv);
+                    }
+                });
+                //gc.fillRect(j * brickWidth.doubleValue(), i * brickHeight.doubleValue(),
+                //      brickWidth.doubleValue(), brickHeight.doubleValue());
+            }
+        }
     }
 
-    public void refresh(Event event) {
-        System.out.println(event);
-        drawShapes(backgroundCanvas.getGraphicsContext2D());
-        drawShapes2(foregroundCanvas.getGraphicsContext2D());
+    public void animate(Event event) {
+        DoubleProperty angle = sapperView.rotateProperty();
+
+        Double xPos = AnchorPane.getLeftAnchor(sapperView),
+                yPos = AnchorPane.getTopAnchor(sapperView);
+
+
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(0),
+                        new KeyValue(angle, sapperView.rotateProperty().doubleValue())
+                ),
+                new KeyFrame(Duration.seconds(1),
+                        new KeyValue(angle, sapperView.rotateProperty().doubleValue() + 90.0)
+                )
+        );
+        timeline.setAutoReverse(true);
+        timeline.setCycleCount(1);
+
+        timeline.play();
     }
 }
 

@@ -30,10 +30,7 @@ public class Civilians extends FieldObject {
 
 	@Override
 	public String toString() {
-		return "Civilians{" +
-				"number=" + number +
-				", isDead=" + isDead +
-				'}';
+		return "Civilians";
 	}
 
 }

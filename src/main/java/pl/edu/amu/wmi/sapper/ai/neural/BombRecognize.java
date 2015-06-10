@@ -11,10 +11,8 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.propagation.Propagation;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
-import org.encog.util.ImageSize;
 import org.encog.util.downsample.Downsample;
 import org.encog.util.downsample.RGBDownsample;
-import pl.edu.amu.wmi.sapper.ui.ImageUtil;
 
 import javax.swing.*;
 import java.awt.Image;
@@ -23,13 +21,13 @@ import java.util.TreeMap;
 
 public class BombRecognize {
 
-    private final static int DOWNSAMPLE_WIDTH = 25, DOWNSAMPLE_HEIGHT = 25;
+    public final static int DOWNSAMPLE_WIDTH = 25, DOWNSAMPLE_HEIGHT = 25;
     private final java.util.Map<String, Image> bombImages;
     private final float learnRate, momentum;
     private final MLDataSet trainingSet;
-    private final Downsample downsample = new RGBDownsample();
     private final int inputNeurons, hiddenLayerNeurons, outputNeurons;
     private final BasicNetwork network;
+    private final Downsample downsample = new RGBDownsample();
 
     private static final String[] bombNames = new String[] {
             "bio", "c4", "chemical",
@@ -49,7 +47,7 @@ public class BombRecognize {
         this.hiddenLayerNeurons = 100;
 
         this.bombImages = new TreeMap<>();
-        loadResources();
+        loadIdealResources();
 
         this.trainingSet = new BasicMLDataSet();
         prepareTrainingSet();
@@ -102,7 +100,7 @@ public class BombRecognize {
         }
     }
 
-    private void loadResources() {
+    private void loadIdealResources() {
         for(String bombName : bombNames){
             String path = "/ideal_images/" + bombName + ".jpg";
 
@@ -115,12 +113,6 @@ public class BombRecognize {
         MLData inputData = new BasicMLData(downsample.downSample(image, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT));
         int result = network.classify(inputData);
         return bombNames[result];
-    }
-
-    public javafx.scene.image.Image getSampledData(Image image){
-        double[] inputData = downsample.downSample(image, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT);
-        ImageSize is = new ImageSize(image);
-        return ImageUtil.createImage(inputData, DOWNSAMPLE_WIDTH, DOWNSAMPLE_HEIGHT, is.getWidth(), is.getHeight());
     }
 
     public static String[] getBombNames() {
