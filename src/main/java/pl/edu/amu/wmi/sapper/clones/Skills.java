@@ -14,10 +14,9 @@ public class Skills {
         System.out.println("Sorted bombs: " + list.toString());
         List<Type> types = new ArrayList<>();
 
-        for(int i=0; i<list.size();i++){
+        for(int i=0; i<list.size();i++)
             types.add(list.get(i).getMaterial());
-          //System.out.println(list.get(i).getMaterial());
-        }
+
 
         double priorityLevel =  1.0/(list.size());
         int countC4=0;
@@ -70,18 +69,13 @@ public class Skills {
 
 
 
-       /* System.out.println(countNuke);
-        System.out.println("Fake priority: "+FakeBombPriority);
-        System.out.println("Nuke priority: "+NukePriority);
-        System.out.println("C4 priority: "+C4Priority);*/
-
-        String skillsForNukeBomb = "";
-        String skillsForC4Bomb = "";
-        String skillsForFakeBomb = "";
-        String skillsForChemicalBomb = "";
-        String skillsForDynamiteBomb = "";
-        String skillsForHomeMadeBomb = "";
-        String skillsForDirtyBomb = "";
+        String skillsForNukeBomb;
+        String skillsForC4Bomb;
+        String skillsForFakeBomb;
+        String skillsForChemicalBomb;
+        String skillsForDynamiteBomb;
+        String skillsForHomeMadeBomb;
+        String skillsForDirtyBomb;
 
         if(NukePriority>=0.66)
             skillsForNukeBomb="11";
@@ -147,7 +141,6 @@ public class Skills {
             skillsForFakeBomb="01";
         else
             skillsForFakeBomb="00";
-
 
         String skills=skillsForNukeBomb+skillsForC4Bomb+skillsForDirtyBomb+skillsForChemicalBomb+skillsForDynamiteBomb+skillsForHomeMadeBomb+skillsForFakeBomb;
         return skills;

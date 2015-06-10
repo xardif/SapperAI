@@ -40,9 +40,8 @@ public class Individual {
     @Override
     public String toString() {
         String geneString = "";
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size(); i++)
             geneString += getGene(i);
-        }
         return geneString;
     }
 }
