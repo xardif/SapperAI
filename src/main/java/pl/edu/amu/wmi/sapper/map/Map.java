@@ -106,19 +106,34 @@ public class Map {
 	}
 	
 	public static Map buildRandomMap() {
-		Map map = new Map(18,18);
+		Map map = new Map(18, 18);
 		
 		map.setField(0, 0, new Sapper());
 		
 		Random random = new Random();
+		 
 		for(int x = 0; x < map.getRows(); x++)
 			for(int y = 1; y < map.getCols(); y++) {
 						
 				int decision = random.nextInt(10);
 				
 				switch(decision) {
+				// Blokada 20%
+				case 0: case 1: 
+					map.setField(x, y, new Blockade());
 				
-				
+					break;
+					
+				// Bomba 10%
+				case 2:
+					map.setField(x, y, new Bomb()); 
+					
+					break;
+					
+				// Cywile 30%	
+				case 3: case 4: case 5:
+					
+					break;
 				
 				}
 				
@@ -126,8 +141,6 @@ public class Map {
 		
 		return map;
 	}
-
-
 
     @Override
     public String toString() {
