@@ -1,6 +1,7 @@
 package pl.edu.amu.wmi.sapper.ai;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
@@ -116,9 +117,9 @@ public class SapperLogic {
 		bomb.setIsActive();
 	}
 	
-	public void findPath(Field fieldStart, Field fieldGoal, Map map)
+	public List<Field> findPath(Field fieldStart, Field fieldGoal, Map map)
 	{
-		ArrayList<Field> SolutionPathList = new ArrayList<Field>();
+		List<Field> SolutionPathList = new ArrayList<Field>();
 
         //tworzenie list OPEN i CLOSED
         SortedCostFieldList OPEN = new SortedCostFieldList();
@@ -205,5 +206,7 @@ public class SapperLogic {
         //wypisanie rozwiazania
         map.PrintSolution(SolutionPathList);
         System.out.println("Koszt przej�cia (w sekundach): " + pathCost);
+        
+        return SolutionPathList;
 	}
 }
