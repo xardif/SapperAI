@@ -68,7 +68,7 @@ public class Map {
 		return result;		
 	}
 		
-	public void PrintSolution(ArrayList<Field> solutionPathList) {
+	public void PrintSolution(List<Field> solutionPathList) {
 		int moveCounter = 0;
 		
 		for(int i=0; i< rows; i++) {
