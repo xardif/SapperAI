@@ -15,11 +15,7 @@ import pl.edu.amu.wmi.sapper.ai.SapperLogic;
 import pl.edu.amu.wmi.sapper.ai.decisions.BombPriorityTree;
 import pl.edu.amu.wmi.sapper.ai.decisions.bomb.BombPriority;
 import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
-import pl.edu.amu.wmi.sapper.clones.Algorithm;
-import pl.edu.amu.wmi.sapper.clones.DetonationTime;
-import pl.edu.amu.wmi.sapper.clones.FitnessCalc;
-import pl.edu.amu.wmi.sapper.clones.Population;
-import pl.edu.amu.wmi.sapper.clones.Skills;
+import pl.edu.amu.wmi.sapper.clones.*;
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.Blockade;
@@ -77,32 +73,12 @@ public class Main {
 			bombType.setField(map.findObject(bomb));
 			bombTypes.add(bombType);
 		}
-		
+
 		BombPriorityTree tree = BombPriorityTree.buildBombPriorityTree();
 		Queue<BombType> sortedBombTypes = tree.sortBombsTypesByPriority(bombTypes);
-		Skills skills = new Skills();
-		
-		String targetSkills = skills.getskills(sortedBombTypes);
-		System.out.println("!!!!!! Pre Target Skills: " + targetSkills);
-		FitnessCalc.setSolution(targetSkills);
-		
-		/* Create an initial population */
-        Population myPop = new Population(50, true);
-        
-        // Evolve our population until we reach an optimum solution
-        int generationCount = 0;
-        Random rand = new Random();
-        int limit = rand.nextInt(3) + 1;
-        while (myPop.getFittest().getFitness() < FitnessCalc.getMaxFitness() && generationCount < limit) {
-            generationCount++;
-            System.out.println("Generation: " + generationCount + " Fittest: " + myPop.getFittest().getFitness());
-            myPop = Algorithm.evolvePopulation(myPop);
-        }
-		
-		String actualSkills = myPop.getFittest().toString();
-		
-		System.out.println("!!!!!! Target Skills: " + targetSkills);
-		System.out.println("!!!!!! Actual Skills: " + actualSkills);
+
+		GARun cos = new GARun();
+		String actualSkills = cos.runGA(sortedBombTypes);
 		
 		SapperLogic logic = new SapperLogic(map.getField(0, 0));
 				
