@@ -137,7 +137,7 @@ public class SapperLogic {
         //wypisanie rozwiazania
         for(Field f: SolutionPathList) {
         	map.PrintSolution(SolutionPathList);
-	        System.out.println("PathCost " + pathCost);
+	        //System.out.println("PathCost " + pathCost);
 	        System.out.println();
 	        System.out.println();
 	        map.moveSapper(this, f);

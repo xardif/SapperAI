@@ -81,7 +81,7 @@ public class Map {
 					}
 		return result;
 	}
-		
+	
 	public void PrintSolution(List<Field> solutionPathList) {
 		int moveCounter = 0;
 		
@@ -97,26 +97,51 @@ public class Map {
 					}
 				}
 				if(solutionNode) {
-					if (getField(i,j).getObjects().get(0) instanceof Empty)
-						System.out.print("o "); //solution path
-					else if (getField(i,j).getObjects().get(0) instanceof Sapper)
-						System.out.print("S ");	//sapper
-					else if (getField(i,j).getObjects().get(0) instanceof Bomb)
-						System.out.print("! ");	//bomb
-					else if(getField(i,j).getObjects().get(0) instanceof Civilians)
-						System.out.print("o%"); //civillians
+					String toPrint = "";
+					for(FieldObject object: getField(i,j).getObjects()) {
+						
+						if (object instanceof Sapper)
+							toPrint += "S";	//sapper
+						
+						if (object instanceof Bomb)
+							toPrint += "!";	//bomb
+						
+						if(object instanceof Civilians)
+							toPrint += "%"; //civillians
+						
+						if(object instanceof Empty && toPrint.isEmpty()) 
+							toPrint += "o"; //solution path
+
+						if(toPrint.length() < 2) toPrint += " ";
+						
+					}
+					System.out.print(toPrint);
 					moveCounter++;
+					
+				} else {
+				
+					String toPrint = "nie jestem kurwa solution";
+					for(FieldObject object: getField(i,j).getObjects()) {
+									
+						if(object instanceof Blockade)
+							toPrint += "#"; //blockade
+						
+						if(object instanceof Civilians)
+							toPrint += "%"; //civillians
+						
+						if (object instanceof Empty && toPrint.isEmpty())
+							toPrint += ".";	//road
+						
+					}
+					
+					if(toPrint.length() < 2) toPrint += " ";
+					System.out.print(toPrint);
+					
 				}
-				else if (getField(i,j).getObjects().get(0) instanceof Empty)
-					System.out.print(". ");	//road
-				else if(getField(i,j).getObjects().get(0) instanceof Blockade)
-					System.out.print("# "); //blockade
-				else if(getField(i,j).getObjects().get(0) instanceof Civilians)
-					System.out.print("% "); //civillians
+				
 			}
 			System.out.println("");
 		}
-		
 		//System.out.println("Liczba krokow: " + moveCounter);
 	}
 	
@@ -135,6 +160,7 @@ public class Map {
 		
 		fieldObjects.clear();
 		fieldObjects.addAll(newFieldObjects);
+		if(fieldObjects.isEmpty()) fieldObjects.add(new Empty());
 		
 		to.getObjects().add(sapperField);
 		
