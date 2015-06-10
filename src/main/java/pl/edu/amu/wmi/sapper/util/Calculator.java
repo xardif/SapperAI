@@ -2,6 +2,8 @@ package pl.edu.amu.wmi.sapper.util;
 
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
+import pl.edu.amu.wmi.sapper.map.objects.Civilians;
+import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
 
 public class Calculator {
@@ -20,16 +22,19 @@ public class Calculator {
 		int radius = bomb.getRadius();
 		
 		int leftBorder = ((center.getXPosition() - radius) < 0) ? 0 : (center.getXPosition() - radius);
-		int rightBorder = ((center.getXPosition() + radius) < 0) ? 0 : (center.getXPosition() + radius);
+		int rightBorder = ((center.getXPosition() + radius) >= 20) ? 0 : (center.getXPosition() + radius);
 		int topBorder = ((center.getYPosition() - radius) < 0) ? 0 : (center.getYPosition() - radius);
-		int bottomBorder = ((center.getYPosition() + radius) < 0) ? 0 : (center.getYPosition() + radius);
+		int bottomBorder = ((center.getYPosition() + radius) >= 20) ? 0 : (center.getYPosition() + radius);
 		
 		
-		for(int x = ) {
-			
-			
-		}
-		
+		for(int x = leftBorder; x < rightBorder; x++) {
+			for(int y = topBorder; y < bottomBorder; y++) {
+				for(FieldObject fieldObject: map.getField(x, y).getObjects())
+					if(fieldObject instanceof Civilians) {
+						result += ((Civilians)fieldObject).getNumber();
+					}
+			}			
+		}		
 		
 		return result;
 		
