@@ -1,15 +1,15 @@
 {
   "rows" : 10,
   "cols" : 10,
-  "map" : [ {"type" : "Sapper"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Civilians","number" : 500}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}
-  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}
-  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Bomb","size" : 3,"timeToDetonation" : 50,"isActive" : true,"pathToTypeImage" : "/img/chemical.jpg"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}
-  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Bomb","size" : 5,"timeToDetonation" : 50,"isActive" : true,"pathToTypeImage" : "/img/c4.jpg"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
-			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
-			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
-			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
-			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
-			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
-			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}
+  "map" : [ {"type" : "Sapper"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Civilians","number" : 500}, {"type" : "Empty"}, {"type" : "Civilians","number" : 169}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Bomb","size" : 3,"timeToDetonation" : 50,"isActive" : true,"pathToTypeImage" : "/img/chemical.jpg"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+  			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Civilians","number" : 37}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+			{"type" : "Empty"}, {"type" : "Bomb","size" : 1,"timeToDetonation" : 30,"isActive" : true,"pathToTypeImage" : "/ideal_images/Nuke.jpg"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+			{"type" : "Blockade"}, {"type" : "Civilians","number" : 250}, {"type" : "Blockade"}, {"type" : "Blockade"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+			{"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+			{"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+			{"type" : "Blockade"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Bomb","size" : 1,"timeToDetonation" : 120,"isActive" : true,"pathToTypeImage" : "/ideal_images/Dynamite.jpg"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"},
+			{"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Blockade"}, {"type" : "Blockade"}, {"type" : "Empty"}, {"type" : "Empty"}
 		]
 }
