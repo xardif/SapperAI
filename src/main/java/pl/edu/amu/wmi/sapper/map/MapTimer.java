@@ -1,5 +1,9 @@
 package pl.edu.amu.wmi.sapper.map;
 
+import java.util.Queue;
+
+import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
+
 public class MapTimer implements Runnable {
 
 	private int time = 0;
@@ -8,9 +12,11 @@ public class MapTimer implements Runnable {
 	}
 
 	private Map map;
+	private Queue<BombType> bombs;
 	
-	public MapTimer(Map m) {
+	public MapTimer(Map m, Queue<BombType> q) {
 		map = m;
+		bombs = q;
 	}
 	
 	@Override
@@ -26,7 +32,7 @@ public class MapTimer implements Runnable {
 			}
 			time++;
 			
-			map.checkBombs();
+			map.checkBombs(bombs);
 			
 		}
 
