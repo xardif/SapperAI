@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -11,8 +12,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
 import pl.edu.amu.wmi.sapper.map.Field;
+import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
+import pl.edu.amu.wmi.sapper.ui.Controller;
 
+import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -23,6 +27,7 @@ public class SapperView extends FieldObjectPane{
     private final DoubleProperty x, y;
     private int direction = 0; // 8 dirs
     private Timeline currentTimeLine;
+    private Controller controller;
 
     public SapperView(FieldObject fo) {
         super(fo);
@@ -45,6 +50,10 @@ public class SapperView extends FieldObjectPane{
                 y.setValue(getY() * ratio);
             }
         });
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public double getX() {
@@ -146,6 +155,13 @@ public class SapperView extends FieldObjectPane{
                 goTo(nextMove);
             }
         });
+
+        Optional<FieldObject> fo = field.getObjects().stream()
+                .filter(fieldObject -> fieldObject instanceof Bomb).findAny();
+        if (fo.isPresent()) {
+            controller.cross(field);
+            ((Bomb)fo.get()).setIsActive(false);
+        }
         return true;
     }
 
