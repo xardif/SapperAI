@@ -15,6 +15,7 @@ import pl.edu.amu.wmi.sapper.ai.neural.BombRecognize;
 import pl.edu.amu.wmi.sapper.clones.*;
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
+import pl.edu.amu.wmi.sapper.map.MapTimer;
 import pl.edu.amu.wmi.sapper.map.objects.Bomb;
 import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
 import pl.edu.amu.wmi.sapper.map.objects.types.Type;
@@ -95,6 +96,9 @@ public class SapperAI implements Runnable {
 
 		Field start = map.getField(0, 0);
 
+		Runnable timer = new MapTimer(map, sortedBombTypes, controller);
+		new Thread(timer);
+		
 		
 		List<Field> finalPath = new ArrayList<>();
 		

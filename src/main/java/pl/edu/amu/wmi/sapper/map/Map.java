@@ -3,6 +3,7 @@ package pl.edu.amu.wmi.sapper.map;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 import pl.edu.amu.wmi.sapper.ai.SapperLogic;
@@ -12,6 +13,8 @@ import pl.edu.amu.wmi.sapper.map.objects.Blockade;
 import pl.edu.amu.wmi.sapper.map.objects.Empty;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
 import pl.edu.amu.wmi.sapper.map.objects.Sapper;
+import pl.edu.amu.wmi.sapper.map.objects.types.BombType;
+import pl.edu.amu.wmi.sapper.ui.Controller;
 
 public class Map {
 	private int rows;
@@ -120,7 +123,7 @@ public class Map {
 					
 				} else {
 				
-					String toPrint = "nie jestem kurwa solution";
+					String toPrint = "";
 					for(FieldObject object: getField(i,j).getObjects()) {
 									
 						if(object instanceof Blockade)
@@ -212,4 +215,48 @@ public class Map {
                 ", fields=" + Arrays.deepToString(fields) +
                 '}';
     }
+
+    public void decrementDetonation(Queue<BombType> bombs) {
+    	for(BombType bomb: bombs)
+    		bomb.decreaseTime();
+    	
+    }
+    
+	public void checkBombs(Queue<BombType> bombs, Controller con) {
+		
+		for(BombType bomb: bombs) {
+			if(bomb.getIsActive()) {
+				if(bomb.getTimeToDetonation() <= 0) {
+					detonate(bomb, con);
+				}
+				
+				
+			}
+			
+		}
+		
+	}
+
+	private void detonate(BombType bomb, Controller con) {
+		
+		Field center = bomb.getField();
+		int radius = bomb.getRadius();
+		con.cross(bomb.getField());
+		
+		int leftBorder = ((center.getXPosition() - radius) < 0) ? 0 : (center.getXPosition() - radius);
+		int rightBorder = ((center.getXPosition() + radius) >= getRows()) ? getRows() - 1 : (center.getXPosition() + radius);
+		int topBorder = ((center.getYPosition() - radius) < 0) ? 0 : (center.getYPosition() - radius);
+		int bottomBorder = ((center.getYPosition() + radius) >= getCols()) ? getCols() - 1 : (center.getYPosition() + radius);
+		
+		
+		for(int x = leftBorder; x < rightBorder; x++) {
+			for(int y = topBorder; y < bottomBorder; y++) {
+				for(FieldObject fieldObject: getField(x, y).getObjects())
+					if(fieldObject instanceof Civilians) {
+						con.cross(getField(x, y));
+					}
+			}			
+		}	
+		
+	}
 }

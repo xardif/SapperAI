@@ -173,5 +173,9 @@ public class BombType {
 		return (int) ((x/5) * size.getValue() + c );
 		
 	}
+	
+	public void decreaseTime() {
+		timeToDetonation--;
+	}
 
 }
