@@ -96,7 +96,7 @@ public class SapperAI implements Runnable {
 
 		Field start = map.getField(0, 0);
 
-		Runnable timer = new MapTimer(map, sortedBombTypes);
+		Runnable timer = new MapTimer(map, sortedBombTypes, controller);
 		new Thread(timer);
 		
 		
