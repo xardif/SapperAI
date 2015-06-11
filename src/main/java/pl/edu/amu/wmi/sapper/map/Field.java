@@ -150,7 +150,7 @@ public class Field implements Comparable<Object> {
 	}
 	
 	
-	public ArrayList<Field> GetSuccessors(SapperLogic sapper, Field goalField, Map map) {
+	public ArrayList<Field> GetSuccessors(Field goalField, Map map) {
 		ArrayList<Field> successors = new ArrayList<Field> ();
 		
 		for (int xd=-1; xd<=1; xd++) {

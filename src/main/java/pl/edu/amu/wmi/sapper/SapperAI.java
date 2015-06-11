@@ -93,19 +93,34 @@ public class SapperAI implements Runnable {
 
 		logic.setSkills(skillsMap);
 
-		Field start = logic.getField();
+		Field start = map.getField(0, 0);
 
+		
+		List<Field> finalPath = new ArrayList<>();
+		
 		for(BombType bombType: sortedBombTypes) {
-			BombPriority priority = tree.getBombPriority(bombType);
-
-			List<Field> path = logic.findPath(start, bombType.getField(), map);
-
-			System.out.println(start);
-			System.out.println(path);
-			controller.goPath(path);
-
-			start = bombType.getField();
-
+			List<Field> temporary = logic.findPath(bombType.getField(), map); 
+			finalPath.addAll( temporary.subList(finalPath.size() == 0 ? 0 : finalPath.size(), temporary.size()) );
+			logic.setField(finalPath.get(finalPath.size() - 1));
 		}
+		
+		/*
+		logic.findPath(map.getField(3, 0), map);
+		for(Field f: path)
+			System.out.print(f.getXPosition() + " " + f.getYPosition() + "; ");
+		System.out.println();
+
+		path = logic.findPath(map.getField(3, 3), map);
+		for(Field f: path)
+			System.out.print(f.getXPosition() + " " + f.getYPosition() + "; ");
+		System.out.println();
+			*/	
+		
+		controller.goPath(finalPath);
+			/*
+			logic.setField(path.get(path.size() - 1));
+			start = path.get(path.size() - 1);
+*/
+		
 	}
 }

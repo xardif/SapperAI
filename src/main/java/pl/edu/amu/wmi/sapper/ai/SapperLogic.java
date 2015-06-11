@@ -18,7 +18,7 @@ public class SapperLogic {
 	public SapperLogic(Field field) {
 		setField(field);
 		skills = new HashMap<>();
-		this.turnPosition = 2;	//zak�adamy, �e po starcie programu saper jest zwr�cony do g�ry
+		//this.turnPosition = 2;	//zak�adamy, �e po starcie programu saper jest zwr�cony do g�ry
 	}
 	
 	public Field getField() {
@@ -48,7 +48,7 @@ public class SapperLogic {
 		bomb.setIsActive();
 	}
 	
-	public List<Field> findPath(Field fieldStart, Field fieldGoal, Map map)
+	public List<Field> findPath(Field fieldGoal, Map map)
 	{
 		List<Field> SolutionPathList = new ArrayList<Field>();
 
@@ -57,7 +57,7 @@ public class SapperLogic {
         SortedCostFieldList CLOSED = new SortedCostFieldList();
 
         //dodanie punktu startowego do listy OPEN
-        OPEN.push(fieldStart);
+        OPEN.push(field);
 
         //dopoki lista OPEN nie jest pusta
         while (OPEN.Count() > 0) {
@@ -70,8 +70,9 @@ public class SapperLogic {
                 break;
             }
 
+            Field current = this.getField();
             //pobranie nastepnikow pola w ktorym obecnie sie znajdujemy
-            ArrayList<Field> successors = fieldCurrent.GetSuccessors(this, fieldGoal, map);
+            ArrayList<Field> successors = fieldCurrent.GetSuccessors(fieldGoal, map);
 
             //dla kazdego nastepnika
             for(Field fieldSuccessor : successors) {
@@ -136,12 +137,11 @@ public class SapperLogic {
         
         //wypisanie rozwiazania
         for(Field f: SolutionPathList) {
-        	map.PrintSolution(SolutionPathList);
-	        //System.out.println("PathCost " + pathCost);
-	        System.out.println();
-	        System.out.println();
-	        map.moveSapper(this, f);
+        	
+	        if(f != field)
+	        	map.moveSapper(this, f);
         }
+        
         
         return SolutionPathList;
 	}
