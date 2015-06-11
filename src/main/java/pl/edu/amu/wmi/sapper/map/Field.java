@@ -178,7 +178,9 @@ public class Field implements Comparable<Object> {
 	@Override
 	public String toString() {
 		return "Field{" +
-				"objects=" + objects +
+				"x=" + x +
+				", y=" + y +
+				", objects=" + objects +
 				'}';
 	}
 }

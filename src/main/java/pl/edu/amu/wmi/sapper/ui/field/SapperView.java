@@ -7,15 +7,21 @@ import javafx.animation.Timeline;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.Duration;
 import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.objects.FieldObject;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class SapperView extends FieldObjectPane{
 
     private final DoubleProperty x, y;
-    private int direction = 0; //0 up, 1 right, etc.
+    private int direction = 0; // 8 dirs
     private Timeline currentTimeLine;
 
     public SapperView(FieldObject fo) {
@@ -57,32 +63,44 @@ public class SapperView extends FieldObjectPane{
         return y;
     }
 
+    private ConcurrentLinkedQueue<Field> movesToDo = new ConcurrentLinkedQueue<>();
+
+
     public boolean goTo(Field field){
         if(currentTimeLine != null){
             if (currentTimeLine.getStatus() != Animation.Status.STOPPED) {
-                return false;
+                movesToDo.add(field);
+                return true;
             }
         }
+        currentTimeLine = new Timeline();
+
         int currentX = (int) (getX() / getWidth());
         int currentY = (int) (getY() / getHeight());
         int currDirection = direction;
 
-        int newDir;
-
-        if(currentY == field.getYPosition()){
+        if(currentY < field.getYPosition()){ // go down
+            if(currentX < field.getXPosition()){ // go right
+                direction = 3;
+            } else if(currentX > field.getXPosition()) { // left
+                direction = 5;
+            } else { // stay x
+                direction = 4;
+            }
+        } else if(currentY > field.getYPosition()){ // go up
             if(currentX < field.getXPosition()){ // go right
                 direction = 1;
-            } else { // go left
-                direction = 3;
-            }
-        } else if(currentX == field.getXPosition()){
-            if(currentY < field.getYPosition()){ // go down
-                direction = 2;
-            } else { // go up
+            } else if(currentX > field.getXPosition()) { // left
+                direction = 7;
+            } else {  // stay x
                 direction = 0;
             }
         } else {
-            return false;
+            if(currentX < field.getXPosition()){ // go right
+                direction = 2;
+            } else if(currentX > field.getXPosition()) {
+                direction = 6;
+            } else { } // stay
         }
 
         int deltaX = field.getXPosition() - currentX;
@@ -93,39 +111,41 @@ public class SapperView extends FieldObjectPane{
         DoubleProperty x = xProperty();
         DoubleProperty y = yProperty();
 
-        KeyFrame moveKeyFrame, moveKeyFrameTarget;
-        if(deltaX == 0){
-            moveKeyFrame = new KeyFrame(Duration.seconds(0.5),
-                    new KeyValue(y, y.doubleValue())
-            );
-            moveKeyFrameTarget = new KeyFrame(Duration.seconds(0.5 + 0.3 * Math.abs(deltaY)),
-                    new KeyValue(y, y.doubleValue() + deltaY * getHeight())
-            );
-        } else {
-            moveKeyFrame = new KeyFrame(Duration.seconds(0.5),
-                    new KeyValue(x, x.doubleValue())
-            );
-            moveKeyFrameTarget = new KeyFrame(Duration.seconds(0.5 + 0.3 * Math.abs(deltaX)),
-                    new KeyValue(x, x.doubleValue() + deltaX * getWidth())
-            );
-        }
+        KeyFrame moveKeyFrameX, moveKeyFrameTargetX, moveKeyFrameY, moveKeyFrameTargetY;
 
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0),
+        moveKeyFrameX = new KeyFrame(Duration.seconds(1.0),
+                new KeyValue(x, x.doubleValue())
+        );
+        moveKeyFrameTargetX = new KeyFrame(moveKeyFrameX.getTime().add(Duration.seconds(0.5 * Math.abs(deltaX))),
+                new KeyValue(x, x.doubleValue() + deltaX * getWidth())
+        );
+
+        moveKeyFrameY = new KeyFrame(moveKeyFrameX.getTime(),
+                new KeyValue(y, y.doubleValue())
+        );
+        moveKeyFrameTargetY = new KeyFrame(moveKeyFrameY.getTime().add(Duration.seconds(0.5 * Math.abs(deltaY))),
+                new KeyValue(y, y.doubleValue() + deltaY * getHeight())
+        );
+
+        currentTimeLine.getKeyFrames().addAll(
+                new KeyFrame(Duration.seconds(0.0),
                     new KeyValue(angle, angle.doubleValue())
                 ),
                 new KeyFrame(Duration.seconds(0.5),
-                    new KeyValue(angle, direction * 90.0)
+                    new KeyValue(angle, direction * 45.0)
                 ),
-                moveKeyFrame,
-                moveKeyFrameTarget
+                moveKeyFrameX, moveKeyFrameTargetX, moveKeyFrameY, moveKeyFrameTargetY
         );
 
-        timeline.setAutoReverse(true);
-        timeline.setCycleCount(1);
-
-        currentTimeLine = timeline;
-        timeline.play();
+        currentTimeLine.setAutoReverse(false);
+        currentTimeLine.setCycleCount(1);
+        currentTimeLine.play();
+        currentTimeLine.setOnFinished(event -> {
+            Field nextMove = movesToDo.poll();
+            if(nextMove != null){
+                goTo(nextMove);
+            }
+        });
         return true;
     }
 

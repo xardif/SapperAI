@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public class Controller {
 
@@ -70,17 +69,12 @@ public class Controller {
     public void initialize(){
         backgroundCanvas.heightProperty().bind(mainPane.heightProperty());
         backgroundCanvas.widthProperty().bind(mainPane.widthProperty());
+    }
 
-        try {
-            map = JsonParser.parse("/map/main.json");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            brickWidth.bind(mainPane.widthProperty().divide(map.getCols()));
-            brickHeight.bind(mainPane.heightProperty().divide(map.getRows()));
-        }
-
-
+    public void setMap(Map map) {
+        this.map = map;
+        brickWidth.bind(mainPane.widthProperty().divide(map.getCols()));
+        brickHeight.bind(mainPane.heightProperty().divide(map.getRows()));
 
         mainPane.widthProperty().addListener(observable -> {
             redrawBackground();
@@ -90,22 +84,6 @@ public class Controller {
         });
 
         initPane();
-
-
-        String name = "bio";
-        String path = "/img/" + name + ".jpg";
-        Image img = new ImageIcon(getClass().getResource(path)).getImage();
-        javafx.scene.image.Image sampledImage = ImageUtil.getSampledData(img);
-
-        //foregroundCanvas.getGraphicsContext2D().drawImage(sampledImage, 0, 0);
-        //foregroundCanvas.getGraphicsContext2D().drawImage(ImageUtil.getFXImage(img), 0, 100);
-
-
-        /*
-        backgroundStackPane.getGraphicsContext2D().fillText("asdasd", 20, 20);
-        foregroundCanvas.getGraphicsContext2D().setFill(Color.BLUE);
-        foregroundCanvas.getGraphicsContext2D().fillText("asdasd", 23, 24);
-        */
     }
 
     private void redrawBackground(){
@@ -220,15 +198,26 @@ public class Controller {
 
     }
 
+    public void goPath(List<Field> path){
+        path.forEach(field -> {
+            if (sapperView.goTo(field)) {
+                notify(String.format("Goto (%d,%d)",
+                        field.getXPosition(), field.getYPosition()));
+            }
+        });
+    }
+
     public void animate(MouseEvent event) {
         int clickedX = (int) (event.getX()/brickWidth.doubleValue()),
                 clickedY = (int) (event.getY()/brickHeight.doubleValue());
 
         Field field = map.getField(clickedX, clickedY);
-        cross(field);
+        if(field != null) {
+            cross(field);
 
-        if(sapperView.goTo(field)){
-            notify(String.format("Goto (%d,%d)", clickedX, clickedY));
+            if (sapperView.goTo(field)) {
+                notify(String.format("Goto (%d,%d)", clickedX, clickedY));
+            }
         }
     }
 
