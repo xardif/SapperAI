@@ -26,7 +26,7 @@ public class MapTimer implements Runnable {
 			}
 			time++;
 			
-			map.checkBombs();
+			//map.checkBombs();
 			
 		}
 

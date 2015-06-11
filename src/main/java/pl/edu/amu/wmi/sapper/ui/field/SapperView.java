@@ -7,7 +7,9 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
@@ -28,28 +30,20 @@ public class SapperView extends FieldObjectPane{
     private int direction = 0; // 8 dirs
     private Timeline currentTimeLine;
     private Controller controller;
+    private IntegerProperty xPos, yPos;
 
     public SapperView(FieldObject fo) {
         super(fo);
         x = new SimpleDoubleProperty();
         y = new SimpleDoubleProperty();
+        xPos = new SimpleIntegerProperty(0);
+        yPos = new SimpleIntegerProperty(0);
 
         getImageView().translateXProperty().bind(x);
         getImageView().translateYProperty().bind(y);
 
-        widthProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue.doubleValue() != 0.0 && newValue.doubleValue() != 0.0) {
-                double ratio = newValue.doubleValue() / oldValue.doubleValue();
-                x.setValue(getX() * ratio);
-            }
-        });
-
-        heightProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue.doubleValue() != 0.0 && newValue.doubleValue() != 0.0) {
-                double ratio = newValue.doubleValue() / oldValue.doubleValue();
-                y.setValue(getY() * ratio);
-            }
-        });
+        x.bind(widthProperty().multiply(xPos));
+        y.bind(heightProperty().multiply(yPos));
     }
 
     public void setController(Controller controller) {
@@ -84,56 +78,52 @@ public class SapperView extends FieldObjectPane{
         }
         currentTimeLine = new Timeline();
 
-        int currentX = (int) (getX() / getWidth());
-        int currentY = (int) (getY() / getHeight());
         int currDirection = direction;
 
-        if(currentY < field.getYPosition()){ // go down
-            if(currentX < field.getXPosition()){ // go right
+        if(yPos.intValue() < field.getYPosition()){ // go down
+            if(xPos.intValue() < field.getXPosition()){ // go right
                 direction = 3;
-            } else if(currentX > field.getXPosition()) { // left
+            } else if(xPos.intValue() > field.getXPosition()) { // left
                 direction = 5;
             } else { // stay x
                 direction = 4;
             }
-        } else if(currentY > field.getYPosition()){ // go up
-            if(currentX < field.getXPosition()){ // go right
+        } else if(yPos.intValue() > field.getYPosition()){ // go up
+            if(xPos.intValue() < field.getXPosition()){ // go right
                 direction = 1;
-            } else if(currentX > field.getXPosition()) { // left
+            } else if(xPos.intValue() > field.getXPosition()) { // left
                 direction = 7;
             } else {  // stay x
                 direction = 0;
             }
         } else {
-            if(currentX < field.getXPosition()){ // go right
+            if(xPos.intValue() < field.getXPosition()){ // go right
                 direction = 2;
-            } else if(currentX > field.getXPosition()) {
+            } else if(xPos.intValue() > field.getXPosition()) {
                 direction = 6;
             } else { } // stay
         }
 
-        int deltaX = field.getXPosition() - currentX;
-        int deltaY = field.getYPosition() - currentY;
+        int deltaX = field.getXPosition() - xPos.intValue();
+        int deltaY = field.getYPosition() - yPos.intValue();
 
 
         DoubleProperty angle = getImageView().rotateProperty();
-        DoubleProperty x = xProperty();
-        DoubleProperty y = yProperty();
 
         KeyFrame moveKeyFrameX, moveKeyFrameTargetX, moveKeyFrameY, moveKeyFrameTargetY;
 
         moveKeyFrameX = new KeyFrame(Duration.seconds(1.0),
-                new KeyValue(x, x.doubleValue())
+                new KeyValue(xPos, xPos.intValue())
         );
         moveKeyFrameTargetX = new KeyFrame(moveKeyFrameX.getTime().add(Duration.seconds(0.5 * Math.abs(deltaX))),
-                new KeyValue(x, x.doubleValue() + deltaX * getWidth())
+                new KeyValue(xPos, xPos.intValue() + deltaX)
         );
 
         moveKeyFrameY = new KeyFrame(moveKeyFrameX.getTime(),
-                new KeyValue(y, y.doubleValue())
+                new KeyValue(yPos, yPos.intValue())
         );
         moveKeyFrameTargetY = new KeyFrame(moveKeyFrameY.getTime().add(Duration.seconds(0.5 * Math.abs(deltaY))),
-                new KeyValue(y, y.doubleValue() + deltaY * getHeight())
+                new KeyValue(yPos, yPos.intValue() + deltaY)
         );
 
         currentTimeLine.getKeyFrames().addAll(
@@ -154,14 +144,13 @@ public class SapperView extends FieldObjectPane{
             if(nextMove != null){
                 goTo(nextMove);
             }
+            Optional<FieldObject> fo = field.getObjects().stream()
+                    .filter(fieldObject -> fieldObject instanceof Bomb).findAny();
+            if (fo.isPresent()) {
+                controller.cross(field);
+                ((Bomb)fo.get()).setIsActive(false);
+            }
         });
-
-        Optional<FieldObject> fo = field.getObjects().stream()
-                .filter(fieldObject -> fieldObject instanceof Bomb).findAny();
-        if (fo.isPresent()) {
-            controller.cross(field);
-            ((Bomb)fo.get()).setIsActive(false);
-        }
         return true;
     }
 

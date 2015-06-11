@@ -118,8 +118,6 @@ public class Controller {
                             SapperView sapperView = new SapperView(fo);
                             sapperView.widthProperty().bind(brickWidth);
                             sapperView.heightProperty().bind(brickHeight);
-                            sapperView.xProperty().setValue(fieldStackPane.xProperty().doubleValue());
-                            sapperView.yProperty().setValue(fieldStackPane.yProperty().doubleValue());
                             sapperView.setController(this);
 
                             fieldObjectPane = sapperView;
