@@ -35,12 +35,12 @@ public class MapTimer implements Runnable {
 			}
 			time++;
 			
-<<<<<<< HEAD
+
 			//map.checkBombs();
-=======
+
 			map.decrementDetonation(bombs);
 			map.checkBombs(bombs, con);
->>>>>>> 8d8a1e7e90382e757c240a7a7be95b656ab06333
+
 			
 		}
 
