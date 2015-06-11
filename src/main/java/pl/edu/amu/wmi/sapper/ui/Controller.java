@@ -1,34 +1,45 @@
 package pl.edu.amu.wmi.sapper.ui;
 
-import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import org.controlsfx.control.PopOver;
+import pl.edu.amu.wmi.sapper.map.Field;
 import pl.edu.amu.wmi.sapper.map.Map;
 import pl.edu.amu.wmi.sapper.map.objects.*;
+import pl.edu.amu.wmi.sapper.ui.field.FieldObjectPane;
+import pl.edu.amu.wmi.sapper.ui.field.FieldStackPane;
+import pl.edu.amu.wmi.sapper.ui.field.SapperView;
 import pl.edu.amu.wmi.sapper.util.JsonParser;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Controller {
 
@@ -37,6 +48,9 @@ public class Controller {
 
     @FXML
     public AnchorPane anchorPane;
+
+    @FXML
+    public TextArea notificationArea;
 
     @FXML
     private Canvas backgroundCanvas;
@@ -107,86 +121,117 @@ public class Controller {
         }
     }
 
-    private ImageView sapperView;
+    private List<FieldObjectPane> civiliansPanes, bombsPanes;
+    private SapperView sapperView;
 
     private void initPane() {
+        civiliansPanes = new ArrayList<>();
+        bombsPanes = new ArrayList<>();
+
         for(int i = 0; i < map.getRows(); i++){
             for(int j = 0; j < map.getCols(); j++){
-                final int x = i, y = j;
+                FieldStackPane fieldStackPane = new FieldStackPane(map.getField(i, j));
+                fieldStackPane.widthProperty().bind(brickWidth);
+                fieldStackPane.heightProperty().bind(brickHeight);
+                fieldStackPane.xProperty().bind(brickWidth.multiply(i));
+                fieldStackPane.yProperty().bind(brickHeight.multiply(j));
+
                 map.getField(i, j).getObjects().forEach(fo -> {
-                    String fileName = fo.toString().toLowerCase();
-                    if (!fileName.equals("empty")) {
-                        String path = "/brick_img/" + fileName + ".png";
-                        javafx.scene.image.Image img = new javafx.scene.image.Image(getClass().getResourceAsStream(path));
-                        ImageView iv = new ImageView(img);
-                        iv.fitWidthProperty().bind(brickWidth);
-                        iv.fitHeightProperty().bind(brickHeight);
+                    if (!(fo instanceof Empty)) {
 
+                        FieldObjectPane fieldObjectPane;
                         if(fo instanceof Sapper){
-                            sapperView = iv;
+                            SapperView sapperView = new SapperView(fo);
+                            sapperView.widthProperty().bind(brickWidth);
+                            sapperView.heightProperty().bind(brickHeight);
+                            sapperView.xProperty().setValue(fieldStackPane.xProperty().doubleValue());
+                            sapperView.yProperty().setValue(fieldStackPane.yProperty().doubleValue());
+
+                            fieldObjectPane = sapperView;
+                            this.sapperView = sapperView;
+                        } else {
+                            fieldObjectPane = new FieldObjectPane(fo);
+                            fieldObjectPane.setParent(fieldStackPane);
+
+                            fieldStackPane.addPane(fieldObjectPane);
+
+                            if(fo instanceof Civilians){
+                                civiliansPanes.add(fieldObjectPane);
+                            }
+                            if(fo instanceof Bomb){
+                                bombsPanes.add(fieldObjectPane);
+                            }
                         }
 
-                        /*brickWidth.addListener((observable, oldValue, newValue) -> {
-                            AnchorPane.setLeftAnchor(iv, y * brickWidth.doubleValue());
-                        });
-
-                        brickHeight.addListener((observable, oldValue, newValue) -> {
-                            AnchorPane.setTopAnchor(iv, x * brickHeight.doubleValue());
-                        });*/
-
-                        StackPane sp = new StackPane();
-
-                        brickWidth.addListener((observable, oldValue, newValue) -> {
-                            //AnchorPane.setLeftAnchor(countLabel, y * brickWidth.doubleValue());
-                            sp.resizeRelocate(y * brickWidth.doubleValue(), sp.getLayoutY(),
-                                    brickWidth.doubleValue(), brickHeight.doubleValue());
-                        });
-
-                        brickHeight.addListener((observable, oldValue, newValue) -> {
-                            //AnchorPane.setTopAnchor(countLabel, x * brickHeight.doubleValue());
-                            sp.resizeRelocate(sp.getLayoutX(), x * brickHeight.doubleValue(),
-                                    brickWidth.doubleValue(), brickHeight.doubleValue());
-                        });
-
-                        sp.getChildren().add(iv);
-
-                        if(fo instanceof Civilians){
-                            Label countLabel = new Label(String.valueOf(((Civilians)fo).getNumber()));
-                            countLabel.setStyle("-fx-text-fill: white");
-                            countLabel.setTextAlignment(TextAlignment.CENTER);
-                            countLabel.setAlignment(Pos.CENTER);
-                            StackPane.setAlignment(countLabel, Pos.CENTER);
-                            sp.getChildren().add(countLabel);
-                        }
-
-                        anchorPane.getChildren().add(sp);
                     }
                 });
-                //gc.fillRect(j * brickWidth.doubleValue(), i * brickHeight.doubleValue(),
-                //      brickWidth.doubleValue(), brickHeight.doubleValue());
+
+                anchorPane.getChildren().addAll(fieldStackPane.getStackPane());
             }
+        }
+        civiliansPanes.forEach(fieldObjectPane -> {
+            Label countLabel = new Label(String.valueOf(((Civilians)fieldObjectPane.getFieldObject()).getNumber()));
+            countLabel.setStyle("-fx-text-fill: white");
+            countLabel.setTextAlignment(TextAlignment.CENTER);
+            countLabel.setAlignment(Pos.CENTER);
+            StackPane.setAlignment(countLabel, Pos.CENTER);
+            fieldObjectPane.getParent().getStackPane().getChildren().add(countLabel);
+        });
+
+        bombsPanes.forEach(fieldObjectPane -> {
+
+            fieldObjectPane.getImageView().setOnMouseClicked(event -> {
+                HBox hBox = new HBox(10.0);
+                hBox.setPadding(new Insets(5.0, 5.0, 5.0, 5.0));
+                Bomb bomb = (Bomb) fieldObjectPane.getFieldObject();
+                Image image = new ImageIcon(getClass().getResource(bomb.getPathToTypeImage())).getImage();
+                javafx.scene.image.Image img1 = ImageUtil.getFXImage(image);
+                javafx.scene.image.Image img2 = ImageUtil.getSampledData(image);
+                hBox.getChildren().addAll(new ImageView(img1), new ImageView(img2));
+
+                PopOver popOver = new PopOver(hBox);
+                popOver.autoHideProperty().setValue(true);
+                popOver.setHideOnEscape(true);
+                popOver.setArrowLocation(PopOver.ArrowLocation.LEFT_TOP);
+                popOver.show((Node) event.getTarget());
+            });
+
+        });
+
+        anchorPane.getChildren().addAll(sapperView.getImageView());
+    }
+
+    public void notify(String msg){
+        notificationArea.setText(msg + "\n" + notificationArea.getText());
+    }
+
+    public void cross(Field field){
+        Optional<FieldObjectPane> bombField = Stream.concat(bombsPanes.stream(), civiliansPanes.stream())
+                .filter(fieldObjectPane -> fieldObjectPane.getParent().getField() == field).findFirst();
+
+        if (bombField.isPresent()) {
+            FieldStackPane toCross = bombField.get().getParent();
+            if(toCross.cross()){
+                notify(String.format("Crossed (%d,%d)",
+                        toCross.getField().getXPosition(),
+                        toCross.getField().getYPosition()));
+            }
+        }
+
+    }
+
+    public void animate(MouseEvent event) {
+        int clickedX = (int) (event.getX()/brickWidth.doubleValue()),
+                clickedY = (int) (event.getY()/brickHeight.doubleValue());
+
+        Field field = map.getField(clickedX, clickedY);
+        cross(field);
+
+        if(sapperView.goTo(field)){
+            notify(String.format("Goto (%d,%d)", clickedX, clickedY));
         }
     }
 
-    public void animate(Event event) {
-        DoubleProperty angle = sapperView.rotateProperty();
 
-        Double xPos = AnchorPane.getLeftAnchor(sapperView),
-                yPos = AnchorPane.getTopAnchor(sapperView);
-
-
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0),
-                        new KeyValue(angle, sapperView.rotateProperty().doubleValue())
-                ),
-                new KeyFrame(Duration.seconds(1),
-                        new KeyValue(angle, sapperView.rotateProperty().doubleValue() + 90.0)
-                )
-        );
-        timeline.setAutoReverse(true);
-        timeline.setCycleCount(1);
-
-        timeline.play();
-    }
 }
 
