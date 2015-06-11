@@ -56,10 +56,6 @@ public class Controller {
 
     private Map map;
 
-    public static final double W = 200; // canvas dimensions.
-    public static final double H = 200;
-    public static final double D = 20;  // diameter.
-
 
     private final DoubleProperty brickWidth = new SimpleDoubleProperty();
     private final DoubleProperty brickHeight = new SimpleDoubleProperty();
@@ -148,12 +144,8 @@ public class Controller {
             }
         }
         civiliansPanes.forEach(fieldObjectPane -> {
-            Label countLabel = new Label(String.valueOf(((Civilians)fieldObjectPane.getFieldObject()).getNumber()));
-            countLabel.setStyle("-fx-text-fill: white");
-            countLabel.setTextAlignment(TextAlignment.CENTER);
-            countLabel.setAlignment(Pos.CENTER);
-            StackPane.setAlignment(countLabel, Pos.CENTER);
-            fieldObjectPane.getParent().getStackPane().getChildren().add(countLabel);
+            fieldObjectPane.getParent()
+                    .getLabel().setText(String.valueOf(((Civilians)fieldObjectPane.getFieldObject()).getNumber()));
         });
 
         bombsPanes.forEach(fieldObjectPane -> {

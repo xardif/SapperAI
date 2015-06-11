@@ -21,10 +21,21 @@ public class FieldStackPane {
     private final Field field;
     private final List<FieldObjectPane> panes;
     private boolean crossed = false;
+    private final Label label;
 
     public FieldStackPane(Field field){
         stackPane = new StackPane();
         this.field = field;
+
+
+        label = new Label("");
+        label.setStyle("-fx-text-fill: white; -fx-font-size: 2em;");
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setAlignment(Pos.CENTER);
+        StackPane.setAlignment(label, Pos.CENTER);
+
+
+        stackPane.getChildren().add(label);
         panes = new ArrayList<>();
 
         width = new SimpleDoubleProperty();
@@ -51,20 +62,20 @@ public class FieldStackPane {
         pane.widthProperty().bind(width);
         pane.heightProperty().bind(height);
         stackPane.getChildren().add(pane.getImageView());
+        label.toFront();
     }
 
     public boolean cross(){
         if(!crossed) {
-            Label crossLabel = new Label("X");
-            crossLabel.setStyle("-fx-text-fill: white; -fx-font-size: 2em;");
-            crossLabel.setTextAlignment(TextAlignment.CENTER);
-            crossLabel.setAlignment(Pos.CENTER);
-            StackPane.setAlignment(crossLabel, Pos.CENTER);
-            stackPane.getChildren().add(crossLabel);
+            label.setText("X");
             crossed = true;
             return true;
         }
         return false;
+    }
+
+    public Label getLabel() {
+        return label;
     }
 
     public double getX() {

@@ -1,6 +1,5 @@
 {
-  "rows" : 4,
-  "cols" : 4,
+  "rows" : 4, "cols" : 4,
   "map" : [ {"type" : "Sapper"}, {"type" : "Empty"}, {"type" : "Blockade"}, {"type" : "Civilians","number" : 500}, 
   			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Empty"}, 
   			{"type" : "Empty"},  {"type" : "Empty"}, {"type" : "Empty"}, {"type" : "Bomb","size" : 3,"timeToDetonation" : 50,"isActive" : true,"pathToTypeImage" : "/img/chemical.jpg"}, 
